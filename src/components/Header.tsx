@@ -2,7 +2,8 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <div className="flex w-full lg:gap-[25%] gap-4 justify-center items-center h-20 border-b border-gray-200">
+    <div className="flex w-full lg:gap-[10%] gap-4 justify-center items-center h-20 border-b border-gray-200">
+
       <Image
         src="/header/start.png"
         alt="Start Trainer Oficial"
@@ -11,6 +12,33 @@ export default function Header() {
         draggable={false}
         className="w-full max-w-[150px] h-auto object-cover lg:ml-12"
       />
+      <div className="hidden lg:flex gap-8">
+        <Image
+          src="/header/trekkingLogo.png"
+          alt="Start Trainer Oficial"
+          width={1000}
+          height={300}
+          draggable={false}
+          className="w-full max-w-[80px] h-auto object-contain"
+        />
+        <Image
+          src="/header/runnersLogo.png"
+          alt="Start Trainer Oficial"
+          width={1490}
+          height={305}
+          draggable={false}
+          className="w-full max-w-[100px] h-auto object-contain"
+        />
+        <Image
+          src="/header/institutoLogo.png"
+          alt="Start Trainer Oficial"
+          width={1000}
+          height={300}
+          draggable={false}
+          className="w-full max-w-[80px] h-auto object-contain"
+        />
+      </div>
+
       <div className="flex gap-4">
         <button className="px-3 lg:px-5 py-1 rounded-xl lg:text-base text-sm text-[#5f2daf] border border-[#5f2daf] 
   font-semibold transition-all duration-300 cursor-pointer hover:bg-gradient-to-r from-[#5f2daf] 
