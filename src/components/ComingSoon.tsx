@@ -30,7 +30,7 @@ export default function ComingSoon() {
 
     return (
         <>
-            <div className="relative w-[380px] h-[200px] lg:w-[1200px] lg:h-[520px] mx-auto mt-5">
+            <div className="relative w-[360px] h-[200px] lg:w-[1200px] lg:h-[520px] mx-auto mt-5">
                 <a
                     href={images[current].link}
                     target="_blank"
@@ -47,7 +47,7 @@ export default function ComingSoon() {
                 </a>
             </div>
 
-            <div className="flex justify-center mt-4 space-x-2">
+            <div className="flex justify-center mt-4 ml-6 space-x-2">
                 {images.map((_, idx) => (
                     <button
                         key={idx}
