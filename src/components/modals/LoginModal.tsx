@@ -56,7 +56,7 @@ export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginM
 
                     <button className="text-sm cursor-pointer self-end mr-13 text-purple-700 mt-2">Esqueceu a senha?</button>
 
-                    <button className="w-[80%] h-12 bg-purple-600 text-white font-bold rounded-md mt-6 hover:bg-purple-700 transition-colors">
+                    <button className="w-[80%] h-12 bg-purple-600 text-white font-bold rounded-md cursor-pointer mt-6 hover:bg-purple-700 transition-colors">
                         Entrar
                     </button>
 
@@ -66,7 +66,7 @@ export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginM
                         <div className="flex-1 h-px bg-gray-300" />
                     </div>
 
-                    <button className="flex items-center justify-center w-[80%] h-12 bg-gray-200 text-gray-700 font-bold rounded-md mt-3 hover:bg-gray-300 transition-colors">
+                    <button className="flex items-center justify-center w-[80%] h-12 bg-gray-200 text-gray-700 font-bold cursor-pointer rounded-md mt-3 hover:bg-gray-300 transition-colors">
                         <Image
                             src="/logos/googleIcon.png"
                             alt="Entre com Google"

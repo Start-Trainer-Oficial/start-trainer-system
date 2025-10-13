@@ -10,7 +10,14 @@ export default function Footer() {
                     <p className="text-xs text-center mt-2">© 2025 Start Trainer Oficial. Todos os direitos reservados.</p>
                 </div>
 
-                <p className="font-bold text-center lg:self-center lg:mt-10">A melhor comunidade de MG! 🤍</p>
+                <div className="flex flex-col lg:mt-10 lg:self-center">
+                    <p className="font-bold text-center">A melhor comunidade de MG! 🤍</p>
+                    <div className="flex justify-center gap-4 mt-2">
+                        <Image src="/footer/trekkingLogoWhite.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
+                        <Image src="/footer/runnersLogoWhite.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
+                        <Image src="/footer/institutoLogoWhite.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
+                    </div>
+                </div>
 
                 <div className="flex flex-col lg:flex-row gap-4 lg:gap-5 items-center">
                     <h1 className="font-bold text-lg mb-2 lg:mb-0">Redes Sociais</h1>

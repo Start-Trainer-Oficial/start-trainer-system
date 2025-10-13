@@ -63,12 +63,11 @@ export default function RegisterModal({ openModalRegister, setOpenModalRegister 
 
                     <input type="password" placeholder="Senha *" className="w-[80%] h-12 text-purple-700 placeholder:text-black/40 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
 
-                    <button className="w-[80%] h-12 bg-purple-600 text-white font-bold rounded-md mt-6 hover:bg-purple-700 transition-colors">
+                    <button className="w-[80%] h-12 bg-purple-600 text-white font-bold cursor-pointer rounded-md mt-6 hover:bg-purple-700 transition-colors">
                         Concluir Cadastro
                     </button>
 
                     <h1 className="text-sm text-black/60 mt-4 px-10 text-center">Ao clicar em "Concluir Cadastro", você concorda com nossos <span className="text-purple-700 font-bold">Termos de Serviço</span> e nossa <span className="text-purple-700 font-bold">Política de Privacidade</span>.</h1>
-
 
                 </div>
 
