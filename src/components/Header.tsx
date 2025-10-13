@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import LoginModal from "./modals/LoginModal";
+import RegisterModal from "./modals/RegisterModal";
 
 export default function Header() {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalLogin, setOpenModalLogin] = useState(false);
+  const [openModalRegister, setOpenModalRegister] = useState(false);
 
   return (
     <div className="flex w-full lg:gap-[10%] gap-4 justify-center items-center h-20 border-b border-gray-200">
@@ -46,19 +48,22 @@ export default function Header() {
       </div>
 
       <div className="flex gap-4">
-        <button onClick={() => setOpenModal(true)} className="px-3 lg:px-5 py-1 rounded-xl lg:text-base text-sm text-[#5f2daf] border border-[#5f2daf] 
+        <button onClick={() => setOpenModalLogin(true)} className="px-3 lg:px-5 py-1 rounded-xl lg:text-base text-sm text-[#5f2daf] border border-[#5f2daf] 
   font-semibold transition-all duration-300 cursor-pointer hover:bg-gradient-to-r from-[#5f2daf] 
   via-[#733df2] to-[#9b4bff] hover:text-white hover:border-transparent">
           Entrar
         </button>
 
-        <LoginModal openModal={openModal} setOpenModal={setOpenModal}/>
+        <LoginModal openModalLogin={openModalLogin} setOpenModalLogin={setOpenModalLogin} />
 
-        <button className="px-3 lg:px-5  py-1 lg:text-base text-sm rounded-xl text-white font-semibold 
+        <button onClick={() => setOpenModalRegister(true)} className="px-3 lg:px-5  py-1 lg:text-base text-sm rounded-xl text-white font-semibold 
   bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff]
   transition-all cursor-pointer duration-300 hover:brightness-90">
           Registre-se
         </button>
+
+        <RegisterModal openModalRegister={openModalRegister} setOpenModalRegister={setOpenModalRegister} />
+
       </div>
 
     </div>
