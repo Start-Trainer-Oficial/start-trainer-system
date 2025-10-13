@@ -46,7 +46,7 @@ export default function DiaryComponent({ title, date, type, status, active }: Di
             {/* Card */}
             <div className="flex flex-wrap justify-center gap-10">
 
-                <div className="mt-10 w-[370px] border border-gray-700/15 shadow-xs hover:shadow-lg transition-all duration-300 rounded-2xl text-center hover:scale-105 hover:shadow-2xl">
+                <div className="mt-10 w-[330px] border border-gray-700/15 shadow-xs hover:shadow-lg transition-all duration-300 rounded-2xl text-center hover:scale-105 hover:shadow-2xl">
                     <div className="relative">
                         <div className="absolute right-5 top-5 bg-green-200 border border-green-900/40 text-green-900 px-3 py-1 rounded-lg text-sm font-medium">
                             <span>Disponível</span>
@@ -89,7 +89,7 @@ export default function DiaryComponent({ title, date, type, status, active }: Di
 
                         <div className="w-[93%] self-center border-b-[0.5px] border-gray-700/15 px-2 mt-5" />
 
-                        <button className="w-[330px] self-center mt-5 mb-6 py-2 rounded-xl text-white font-semibold
+                        <button className="w-[300px] self-center mt-5 mb-6 py-2 rounded-xl text-white font-semibold
     bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff]
     transition-all cursor-pointer duration-300 hover:brightness-90">
                             Fazer inscrição
