@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
+
+import { registerUser } from "@/services/api";
 
 type LoginModalProps = {
     openModalRegister: boolean;
@@ -10,6 +12,14 @@ type LoginModalProps = {
 }
 
 export default function RegisterModal({ openModalRegister, setOpenModalRegister }: LoginModalProps) {
+    const [form, setForm] = useState({
+        name: "",
+        cpf: "",
+        email: "",
+        phone: "",
+        password: ""
+    })
+
 
     useEffect(() => {
         const element = document.documentElement;
@@ -23,6 +33,22 @@ export default function RegisterModal({ openModalRegister, setOpenModalRegister 
         return () => element.classList.remove("overflow-hidden");
     }, [openModalRegister]);
 
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await registerUser(form);
+            if (response.status === 201) {
+                alert("Usuário registrado com sucesso!");
+                handleCloseModal();
+            } else {
+                alert("Erro ao registrar usuário. Por favor, tente novamente.");
+            }
+            
+        } catch (error: any) {
+            console.error("Erro ao registrar usuário:", error?.message || error);
+        }
+    }
 
     const handleCloseModal = () => {
         if (setOpenModalRegister) {
@@ -50,24 +76,28 @@ export default function RegisterModal({ openModalRegister, setOpenModalRegister 
                     />
                     <h2 className="text-md font-bold text-center mt-1 px-4 text-black/70">A melhor comunidade de MG! 💜</h2>
 
-                    <h1 className="text-xl font-bold text-purple-700 mt-4 uppercase">É aqui que sua jornada começa!</h1>
+                    <h1 className="text-lg font-bold text-purple-700 mt-4 uppercase">É aqui que sua jornada começa!</h1>
                     <p className="text-xs text-black/60 px-10 text-center">Crie sua conta e tenha acesso a todos os nossos recursos exclusivos.</p>
 
-                    <input type="text" placeholder="Nome *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-8 focus:outline-none" />
+                    <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center w-full">
 
-                    <input type="text" placeholder="CPF *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
+                        <input type="text" onChange={e => setForm({ ...form, name: e.target.value})} placeholder="Nome *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-8 focus:outline-none" />
 
-                    <input type="text" placeholder="Email *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
+                        <input type="text" onChange={e => setForm({ ...form, cpf: e.target.value})} placeholder="CPF *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
 
-                    <input type="text" placeholder="Telefone *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
+                        <input type="text" onChange={e => setForm({ ...form, email: e.target.value})} placeholder="Email *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
 
-                    <input type="password" placeholder="Senha *" className="w-[80%] h-12 text-purple-700 placeholder:text-black/40 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
+                        <input type="text" onChange={e => setForm({ ...form, phone: e.target.value})} placeholder="Telefone *" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
 
-                    <button className="w-[80%] h-12 bg-purple-600 text-white font-bold cursor-pointer rounded-md mt-6 hover:bg-purple-700 transition-colors">
-                        Concluir Cadastro
-                    </button>
+                        <input type="password" onChange={e => setForm({ ...form, password: e.target.value})} placeholder="Senha *" className="w-[80%] h-12 text-purple-700 placeholder:text-black/40 border border-gray-200 rounded-md px-3 mt-3 focus:outline-none" />
 
-                    <h1 className="text-sm text-black/60 mt-4 px-10 text-center">Ao clicar em "Concluir Cadastro", você concorda com nossos <span className="text-purple-700 font-bold">Termos de Serviço</span> e nossa <span className="text-purple-700 font-bold">Política de Privacidade</span>.</h1>
+                        <button type="submit" className="w-[80%] h-12 bg-purple-600 text-white font-bold cursor-pointer rounded-md mt-6 hover:bg-purple-700 transition-colors">
+                            Concluir Cadastro
+                        </button>
+
+                    </form>
+
+                    <h1 className="text-xs text-black/60 mt-4 px-10 text-center">Ao clicar em "Concluir Cadastro", você concorda com nossos <span className="text-purple-700 font-bold">Termos de Serviço</span> e nossa <span className="text-purple-700 font-bold">Política de Privacidade</span>.</h1>
 
                 </div>
 

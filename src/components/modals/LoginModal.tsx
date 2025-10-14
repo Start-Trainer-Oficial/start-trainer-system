@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
+
+import { loginUser } from "@/services/api";
+import { useAuth } from "@/context/authContext";
 
 type LoginModalProps = {
     openModalLogin: boolean;
@@ -10,6 +13,15 @@ type LoginModalProps = {
 }
 
 export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginModalProps) {
+
+    const {loginUser: loginContext} = useAuth();
+
+    const [form, setForm] = useState({
+        identifier: "",
+        password: ""
+    })
+    const [identifier, setIdentifier] = useState("");
+    const [password, setPassword] = useState("");
 
     useEffect(() => {
         const element = document.documentElement;
@@ -23,6 +35,17 @@ export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginM
         return () => element.classList.remove("overflow-hidden");
     }, [openModalLogin]);
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const data = await loginUser(form.identifier.trim(), form.password);
+            loginContext(data.user, data.token);
+            handleCloseModal();
+        } catch (error: any) {
+            console.error("Erro ao realizar login:", error?.message || error);
+        }
+
+    }
 
     const handleCloseModal = () => {
         if (setOpenModalLogin) {
@@ -50,38 +73,42 @@ export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginM
                     />
                     <h2 className="text-md font-bold text-center mt-1 px-4 text-black/70">A melhor comunidade de MG! 💜</h2>
 
-                    <input type="text" placeholder="Email ou CPF" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-8 focus:outline-none" />
+                    <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center w-full">
 
-                    <input type="password" placeholder="Senha" className="w-[80%] h-12 text-purple-700 placeholder:text-black/40 border border-gray-200 rounded-md px-3 mt-2 focus:outline-none" />
+                        <input type="text" onChange={e => setForm({ ...form, identifier: e.target.value })} placeholder="Email" className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 rounded-md px-3 mt-8 focus:outline-none" />
 
-                    <button className="text-sm cursor-pointer self-end mr-13 text-purple-700 mt-2">Esqueceu a senha?</button>
+                        <input type="password" onChange={e => setForm({ ...form, password: e.target.value })} placeholder="Senha" className="w-[80%] h-12 text-purple-700 placeholder:text-black/40 border border-gray-200 rounded-md px-3 mt-2 focus:outline-none" />
 
-                    <button className="w-[80%] h-12 bg-purple-600 text-white font-bold rounded-md cursor-pointer mt-6 hover:bg-purple-700 transition-colors">
-                        Entrar
-                    </button>
+                        <a className="text-sm cursor-pointer self-end mr-13 text-purple-700 mt-2">Esqueceu a senha?</a>
 
-                    <div className="flex items-center w-[80%] mt-4">
-                        <div className="flex-1 h-px bg-gray-300" />
-                        <span className="mx-3 text-sm text-gray-500">Ou entre com</span>
-                        <div className="flex-1 h-px bg-gray-300" />
-                    </div>
+                        <button className="w-[80%] h-12 bg-purple-600 text-white font-bold rounded-md cursor-pointer mt-6 hover:bg-purple-700 transition-colors">
+                            Entrar
+                        </button>
 
-                    <button className="flex items-center justify-center w-[80%] h-12 bg-gray-200 text-gray-700 font-bold cursor-pointer rounded-md mt-3 hover:bg-gray-300 transition-colors">
-                        <Image
-                            src="/logos/googleIcon.png"
-                            alt="Entre com Google"
-                            width={1000}
-                            height={300}
-                            draggable={false}
-                            className="w-full max-w-[40px] h-auto object-cover"
-                        />
-                        Entrar com Google
-                    </button>
+                        <div className="flex items-center w-[80%] mt-4">
+                            <div className="flex-1 h-px bg-gray-300" />
+                            <span className="mx-3 text-sm text-gray-500">Ou entre com</span>
+                            <div className="flex-1 h-px bg-gray-300" />
+                        </div>
 
-                    <p className="text-sm text-gray-500 mt-2">Não tem uma conta? <a href="#" className="text-purple-600 cursor-pointer">
-                        Cadastre-se
-                    </a>
-                    </p>
+                        <button className="flex items-center justify-center w-[80%] h-12 bg-gray-200 text-gray-700 font-bold cursor-pointer rounded-md mt-3 hover:bg-gray-300 transition-colors">
+                            <Image
+                                src="/logos/googleIcon.png"
+                                alt="Entre com Google"
+                                width={1000}
+                                height={300}
+                                draggable={false}
+                                className="w-full max-w-[40px] h-auto object-cover"
+                            />
+                            Entrar com Google
+                        </button>
+
+                        <p className="text-sm text-gray-500 mt-2">Não tem uma conta? <a href="#" className="text-purple-600 cursor-pointer">
+                            Cadastre-se
+                        </a>
+                        </p>
+
+                    </form>
 
                 </div>
 
