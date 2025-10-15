@@ -58,7 +58,7 @@ export default function EventComponent({ title, date, type, status, active }: Ev
 
             <div className="flex flex-wrap justify-center gap-10">
 
-                <div className="mt-10 w-[360px] border border-gray-700/15 shadow-xs hover:shadow-lg transition-all duration-300 rounded-2xl text-center hover:scale-105 hover:shadow-2xl">
+                <div className="mt-10 w-[360px] border border-gray-700/15 rounded-2xl text-center">
                     <div className="relative">
                         <div className="absolute right-5 top-5 bg-green-200 border border-green-900/40 text-green-900 px-3 py-1 rounded-lg text-sm font-medium">
                             <span>Disponível</span>
