@@ -1,19 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import LoginModal from "./modals/LoginModal";
-import RegisterModal from "./modals/RegisterModal";
-
 import { useAuth } from "@/context/authContext";
+
+import Image from "next/image";
+
+import { HiOutlineTicket } from "react-icons/hi2";
+import { CiLogout } from "react-icons/ci";
+
+import { useLoginModal } from "@/context/loginModalContext";
+import RegisterModal from "../modals/RegisterModal";
 import ProfileDropdown from "./ProfileDropdown";
 
 export default function Header() {
-  const { user, logout } = useAuth();
+  const { user, logout, hydrated } = useAuth();
 
-  const [openModalLogin, setOpenModalLogin] = useState(false);
+  const {openModal, closeModal} = useLoginModal();
   const [openModalRegister, setOpenModalRegister] = useState(false);
 
+  if (!hydrated) return null;
 
   return (
     <div className="flex w-full lg:gap-[10%] gap-4 justify-center items-center h-20 border-b border-gray-200">
@@ -55,13 +60,11 @@ export default function Header() {
 
       {!user ? (
         <div className="flex gap-4">
-          <button onClick={() => setOpenModalLogin(true)} className="px-3 lg:px-5 py-1 rounded-xl lg:text-base text-sm text-[#5f2daf] border border-[#5f2daf] 
+          <button onClick={() => openModal()} className="px-3 lg:px-5 py-1 rounded-xl lg:text-base text-sm text-[#5f2daf] border border-[#5f2daf] 
   font-semibold transition-all duration-300 cursor-pointer hover:bg-gradient-to-r from-[#5f2daf] 
   via-[#733df2] to-[#9b4bff] hover:text-white hover:border-transparent">
             Entrar
           </button>
-
-          <LoginModal openModalLogin={openModalLogin} setOpenModalLogin={setOpenModalLogin} />
 
           <button onClick={() => setOpenModalRegister(true)} className="px-3 lg:px-5  py-1 lg:text-base text-sm rounded-xl text-white font-semibold 
   bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff]
@@ -77,8 +80,28 @@ export default function Header() {
           <ProfileDropdown
             user={{ name: `${user.name}`, email: `${user.email}`, avatarUrl: "/header/userIcon.png" }}
             menuItems={[
-              { label: "Meus eventos", onClick: () => console.log("Editar perfil") },
-              { label: "Sair", onClick: () => logout() },
+              {
+                label: (
+                  <>
+                    <div className="flex gap-2 text-black/70">
+                      <HiOutlineTicket size={18} className="text-purple-800" />
+                      Meus eventos
+                    </div>
+                  </>
+                ),
+                onClick: () => console.log("Editar perfil"),
+              },
+              {
+                label: (
+                  <>
+                    <div className="flex gap-2 text-black/70">
+                      <CiLogout size={17} className="text-purple-800" />
+                      Sair
+                    </div>
+                  </>
+                ),
+                onClick: () => logout(),
+              }
             ]}
           />
 

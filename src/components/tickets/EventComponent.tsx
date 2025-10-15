@@ -4,7 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { MdSchedule, MdCalendarMonth, MdLocationPin, MdPeople } from "react-icons/md";
 
-type DiaryComponentsProps = {
+import { useAuth } from "@/context/authContext";
+import { useLoginModal } from "@/context/loginModalContext";
+
+type EventComponentsProps = {
     title?: string;
     date?: string;
     type?: string;
@@ -12,13 +15,23 @@ type DiaryComponentsProps = {
     active?: boolean;
 }
 
-export default function DiaryComponent({ title, date, type, status, active }: DiaryComponentsProps) {
+export default function EventComponent({ title, date, type, status, active }: EventComponentsProps) {
+    const { user } = useAuth();
+    const {openModal} = useLoginModal();
 
     const [selectedOption, setSelectedOption] = useState<"Trilhas" | "Corridas" | "Beneficentes">("Trilhas");
 
+    const handleRedirect = () => {
+        if (!user) {
+            openModal();
+        } else {
+            window.location.href = "/inscricao";
+        }
+    }
+
     return (
         <>
-            {/* Nav Option */}
+
             <div className="flex w-[340px] lg:w-[490px] items-center justify-center rounded-xl bg-gray-700/8 mt-4">
                 <button onClick={() => setSelectedOption("Trilhas")} className={` px-6 lg:px-12 py-2 rounded-xl font-semibold transition-all duration-300 cursor-pointer
                     ${selectedOption === "Trilhas"
@@ -43,7 +56,6 @@ export default function DiaryComponent({ title, date, type, status, active }: Di
                 </button>
             </div>
 
-            {/* Card */}
             <div className="flex flex-wrap justify-center gap-10">
 
                 <div className="mt-10 w-[360px] border border-gray-700/15 shadow-xs hover:shadow-lg transition-all duration-300 rounded-2xl text-center hover:scale-105 hover:shadow-2xl">
@@ -89,11 +101,18 @@ export default function DiaryComponent({ title, date, type, status, active }: Di
 
                         <div className="w-[93%] self-center border-b-[0.5px] border-gray-700/15 px-2 mt-5" />
 
-                        <button className="w-[300px] self-center mt-5 mb-6 py-2 rounded-xl text-white font-semibold
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <button onClick={handleRedirect} className="w-[200px] mt-5 mb-6 py-2 rounded-lg text-white font-semibold
     bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff]
     transition-all cursor-pointer duration-300 hover:brightness-90">
-                            Fazer inscrição
-                        </button>
+                                Fazer inscrição
+                            </button>
+
+                            <button className="w-[120px] mt-5 mb-6 py-2 rounded-lg text-purple-800 border border-purple-800/20 
+                            font-semibold bg-white cursor-pointer">
+                                Sobre
+                            </button>
+                        </div>
 
                     </div>
                 </div>

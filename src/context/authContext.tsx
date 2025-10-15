@@ -6,6 +6,7 @@ import { getLoggedUser, getToken, logout as logoutStorage } from '../services/au
 interface AuthContextType {
   user: any | null;
   token: string | null;
+  hydrated: boolean;
   loginUser: (user: any, token: string) => void;
   logout: () => void;
 }
@@ -13,6 +14,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   token: null,
+  hydrated: false,
   loginUser: () => {},
   logout: () => {},
 });
@@ -20,27 +22,43 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const loggedUser = getLoggedUser();
-    const storedToken = getToken();
-    setUser(loggedUser);
-    setToken(storedToken);
+    const savedUser = localStorage.getItem('user');
+    const savedToken = localStorage.getItem('token');
+
+    if (savedUser && savedToken) {
+      setUser(JSON.parse(savedUser));
+      setToken(savedToken);
+    } else {
+
+      const loggedUser = getLoggedUser();
+      const storedToken = getToken();
+      setUser(loggedUser);
+      setToken(storedToken);
+    }
+
+    setHydrated(true);
   }, []);
 
   const loginUser = (userData: any, tokenData: string) => {
     setUser(userData);
     setToken(tokenData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('token', tokenData);
   };
 
   const logout = () => {
     logoutStorage();
     setUser(null);
     setToken(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loginUser, logout }}>
+    <AuthContext.Provider value={{ user, token, loginUser, logout, hydrated }}>
       {children}
     </AuthContext.Provider>
   );

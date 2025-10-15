@@ -2,17 +2,15 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { MdClose } from "react-icons/md";
-
+import { useLoginModal } from "@/context/loginModalContext";
 import { loginUser } from "@/services/api";
 import { useAuth } from "@/context/authContext";
 
-type LoginModalProps = {
-    openModalLogin: boolean;
-    setOpenModalLogin?: (open: boolean) => void;
-}
+import { MdClose } from "react-icons/md";
 
-export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginModalProps) {
+
+export default function LoginModal() {
+    const { isOpen, closeModal } = useLoginModal();
 
     const {loginUser: loginContext} = useAuth();
 
@@ -20,20 +18,18 @@ export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginM
         identifier: "",
         password: ""
     })
-    const [identifier, setIdentifier] = useState("");
-    const [password, setPassword] = useState("");
 
     useEffect(() => {
         const element = document.documentElement;
 
-        if (openModalLogin) {
+        if (isOpen) {
             element.classList.add("overflow-hidden");
         } else {
             element.classList.remove("overflow-hidden");
         }
 
         return () => element.classList.remove("overflow-hidden");
-    }, [openModalLogin]);
+    }, [isOpen]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -48,12 +44,12 @@ export default function LoginModal({ openModalLogin, setOpenModalLogin }: LoginM
     }
 
     const handleCloseModal = () => {
-        if (setOpenModalLogin) {
-            setOpenModalLogin(false);
+        if (isOpen) {
+            closeModal();
         }
     }
 
-    if (!openModalLogin) return null;
+    if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 h-screen overflow-hidden">

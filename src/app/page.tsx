@@ -1,6 +1,6 @@
-import Carousel from "@/components/Carousel";
-import DiaryComponent from "@/components/diary/diaryComponent";
-import ComingSoon from "@/components/ComingSoon";
+import Carousel from "@/components/carousels/MainCarousel";
+import EventComponent from "@/components/tickets/EventComponent";
+import ComingSoon from "@/components/carousels/ComingSoonCarousel";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center">
         <h1 className="font-bold text-4xl uppercase mt-20 text-[#733df2]">Agenda START</h1>
         <p className="mt-1 font-bold opacity-70">Confira nossas próximas programações!</p>
-        <DiaryComponent />
+        <EventComponent />
       </div>
 
       <div className="flex flex-col items-start justify-center lg:px-[20%] mb-20">

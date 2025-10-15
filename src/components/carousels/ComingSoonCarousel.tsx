@@ -5,15 +5,15 @@ import { useState, useEffect } from "react";
 const images = [
     {
         url: "/comingSoon/halloween.jpg",
-        link: "https://chat.whatsapp.com/DqNvn6ZmHYE7CfrbYTFks8?mode=ems_share_t"
+        link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
     },
     {
         url: "/comingSoon/halloween.jpg",
-        link: "https://chat.whatsapp.com/DqNvn6ZmHYE7CfrbYTFks8?mode=ems_share_t"
+        link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
     },
     {
         url: "/comingSoon/halloween.jpg",
-        link: "https://chat.whatsapp.com/DqNvn6ZmHYE7CfrbYTFks8?mode=ems_share_t"
+        link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
     },
 ];
 

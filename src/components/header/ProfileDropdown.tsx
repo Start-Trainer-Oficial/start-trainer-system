@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 
 interface ProfileDropdownProps {
   user: {
@@ -7,7 +7,7 @@ interface ProfileDropdownProps {
     email: string;
     avatarUrl?: string;
   };
-  menuItems: { label: string; onClick: () => void }[];
+  menuItems: { label: ReactNode; onClick: () => void }[];
 }
 
 export default function ProfileDropdown({ user, menuItems }: ProfileDropdownProps) {

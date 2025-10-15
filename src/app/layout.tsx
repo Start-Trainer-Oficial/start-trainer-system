@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/authContext";
+import { LoginModalProvider } from "@/context/loginModalContext";
+
+import Header from "@/components/header/Header";
+import Footer from "@/components/Footer";
+import LoginModal from "@/components/modals/LoginModal";
+
 
 export const metadata: Metadata = {
   title: "Start Trainer Oficial ®",
@@ -19,12 +23,17 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
+
         <AuthProvider>
-          <Header />
-          {children}
-          <Footer />
+          <LoginModalProvider>
+            <Header />
+            {children}
+            <Footer />
+            <LoginModal />
+          </LoginModalProvider>
         </AuthProvider>
+
       </body>
-    </html>
+    </html >
   );
 }
