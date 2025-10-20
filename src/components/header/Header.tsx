@@ -7,16 +7,17 @@ import Image from "next/image";
 
 import { HiOutlineTicket } from "react-icons/hi2";
 import { CiLogout } from "react-icons/ci";
-
 import { useLoginModal } from "@/context/loginModalContext";
 import RegisterModal from "../modals/RegisterModal";
 import ProfileDropdown from "./ProfileDropdown";
+import MyEventsModal from "../modals/MyEventsModal";
 
 export default function Header() {
   const { user, logout, hydrated } = useAuth();
 
-  const {openModal, closeModal} = useLoginModal();
+  const { openModal } = useLoginModal();
   const [openModalRegister, setOpenModalRegister] = useState(false);
+  const [openModalMyEvents, setOpenModalMyEvents] = useState(false);
 
   if (!hydrated) return null;
 
@@ -89,7 +90,7 @@ export default function Header() {
                     </div>
                   </>
                 ),
-                onClick: () => console.log("Editar perfil"),
+                onClick: () => setOpenModalMyEvents(true),
               },
               {
                 label: (
@@ -107,6 +108,8 @@ export default function Header() {
 
         </div>
       )}
+
+      <MyEventsModal openModalEvents={openModalMyEvents} setOpenModalEvents={setOpenModalMyEvents} />
 
     </div>
   );

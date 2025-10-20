@@ -6,6 +6,7 @@ import { MdSchedule, MdCalendarMonth, MdLocationPin, MdPeople } from "react-icon
 
 import { useAuth } from "@/context/authContext";
 import { useLoginModal } from "@/context/loginModalContext";
+import NavLink from "../NavLink";
 
 type EventComponentsProps = {
     title?: string;
@@ -17,7 +18,7 @@ type EventComponentsProps = {
 
 export default function EventComponent({ title, date, type, status, active }: EventComponentsProps) {
     const { user } = useAuth();
-    const {openModal} = useLoginModal();
+    const { openModal } = useLoginModal();
 
     const [selectedOption, setSelectedOption] = useState<"Trilhas" | "Corridas" | "Beneficentes">("Trilhas");
 
@@ -32,29 +33,7 @@ export default function EventComponent({ title, date, type, status, active }: Ev
     return (
         <>
 
-            <div className="flex w-[340px] lg:w-[490px] items-center justify-center rounded-xl bg-gray-700/8 mt-4">
-                <button onClick={() => setSelectedOption("Trilhas")} className={` px-6 lg:px-12 py-2 rounded-xl font-semibold transition-all duration-300 cursor-pointer
-                    ${selectedOption === "Trilhas"
-                        ? "bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff] text-white"
-                        : "bg-transparent text-[#5f2daf]"}
-                `}>
-                    Trilhas
-                </button>
-                <button onClick={() => setSelectedOption("Corridas")} className={`px-6 lg:px-12 py-2 rounded-xl font-semibold transition-all duration-300 cursor-pointer
-                    ${selectedOption === "Corridas"
-                        ? "bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff] text-white"
-                        : "bg-transparent text-[#5f2daf]"}
-                `}>
-                    Corridas
-                </button>
-                <button onClick={() => setSelectedOption("Beneficentes")} className={`px-6 lg:px-12 py-2 rounded-xl font-semibold transition-all duration-300 cursor-pointer
-                    ${selectedOption === "Beneficentes"
-                        ? "bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff] text-white"
-                        : "bg-transparent text-[#5f2daf]"}
-                `}>
-                    Beneficentes
-                </button>
-            </div>
+            <NavLink labels={["Trilhas", "Corridas", "Beneficentes"]} options={["Trilhas", "Corridas", "Beneficentes"]} />
 
             <div className="flex flex-wrap justify-center gap-10">
 

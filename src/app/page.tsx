@@ -1,5 +1,5 @@
 import Carousel from "@/components/carousels/MainCarousel";
-import EventComponent from "@/components/tickets/EventComponent";
+import EventComponent from "@/components/tickets/EventsComponent";
 import ComingSoon from "@/components/carousels/ComingSoonCarousel";
 
 export default function Home() {

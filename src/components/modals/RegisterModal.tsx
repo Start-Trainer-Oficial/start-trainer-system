@@ -6,12 +6,12 @@ import { MdClose } from "react-icons/md";
 
 import { registerUser } from "@/services/api";
 
-type LoginModalProps = {
+type RegisterModalProps = {
     openModalRegister: boolean;
     setOpenModalRegister?: (open: boolean) => void;
 }
 
-export default function RegisterModal({ openModalRegister, setOpenModalRegister }: LoginModalProps) {
+export default function RegisterModal({ openModalRegister, setOpenModalRegister }: RegisterModalProps) {
     const [form, setForm] = useState({
         name: "",
         cpf: "",
