@@ -36,7 +36,7 @@ export default function MyEventsModal({ openModalEvents, setOpenModalEvents }: M
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 h-screen overflow-hidden">
-            <div className="w-full h-screen lg:w-[800px] lg:h-[700px] bg-white lg:rounded-xl shadow-xl flex flex-col items-center relative ">
+            <div className="w-full h-screen lg:w-[500px] lg:h-[700px] bg-white lg:rounded-xl shadow-xl flex flex-col items-center relative ">
                 <div className="flex items-center justify-center">
                     <div className="text-center mb-2">
                         <h1 className="mt-8 text-lg font-bold text-[#5f2daf] uppercase">MEUS EVENTOS</h1>
@@ -48,7 +48,7 @@ export default function MyEventsModal({ openModalEvents, setOpenModalEvents }: M
                     </ button>
                 </div>
 
-                <NavLink labels={["Eventos ativos", "Passados"]} options={["Eventos ativos", "Passados"]} />
+                {/* <NavLink labels={["Eventos ativos", "Passados"]} options={["Eventos ativos", "Passados"]} /> */}
 
                 <div className="flex-wrap">
 

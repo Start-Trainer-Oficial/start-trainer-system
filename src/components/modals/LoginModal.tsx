@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLoginModal } from "@/context/loginModalContext";
-import { loginUser } from "@/services/api";
+import { loginUser } from "@/services/user";
 import { useAuth } from "@/context/authContext";
 
 import { MdClose } from "react-icons/md";

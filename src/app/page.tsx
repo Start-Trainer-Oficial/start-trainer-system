@@ -15,7 +15,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-start justify-center lg:px-[20%] mb-20">
-        <h1 className="font-bold text-3xl uppercase ml-6 mt-20 text-[#733df2]">EM BREVE 🔥</h1>
+        <h1 className="font-bold text-3xl uppercase ml-6 mt-20 text-[#733df2]">CONFIRA 🔥</h1>
         <p className="mt-1 ml-6 font-bold opacity-70">Pra você ficar de olho!</p>
         <ComingSoon />
       </div>

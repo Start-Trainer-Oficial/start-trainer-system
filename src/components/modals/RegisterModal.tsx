@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 
-import { registerUser } from "@/services/api";
+import { registerUser } from "@/services/user";
 
 type RegisterModalProps = {
     openModalRegister: boolean;
