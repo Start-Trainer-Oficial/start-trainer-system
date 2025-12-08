@@ -36,7 +36,7 @@ export default function ProfileDropdown({ user, menuItems }: ProfileDropdownProp
           <img
             src={user.avatarUrl}
             alt="Avatar"
-            className="w-8 h-8 rounded-full object-cover border border-gray-300"
+            className="w-8 h-8 rounded-full object-cover border border-[#381877]"
           />
         )}
         <p className="font-semibold text-gray-800">Olá, {user.name.split(" ")[0]}!</p>
@@ -62,7 +62,7 @@ export default function ProfileDropdown({ user, menuItems }: ProfileDropdownProp
                 item.onClick();
                 setIsOpen(false);
               }}
-              className="w-full text-left font-medium px-4 py-2 text-sm text-black hover:bg-purple-100 transition-colors cursor-pointer"
+              className="w-full text-left font-medium px-4 py-2 text-sm text-black hover:bg-[#61ffc2] transition-colors cursor-pointer"
             >
               {item.label}
             </button>

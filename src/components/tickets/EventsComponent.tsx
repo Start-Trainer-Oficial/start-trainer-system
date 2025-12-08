@@ -68,7 +68,7 @@ export default function EventComponent() {
                             width={150}
                             height={150}
                         />
-                        <h2 className="text-2xl font-bold text-[#5f2daf] mb-2">Nenhum evento encontrado</h2>
+                        <h2 className="text-2xl font-bold text-[#381877] mb-2">Nenhum evento encontrado</h2>
                         <p className="text-gray-500 text-sm text-center px-4">
                             Não temos eventos disponíveis para esta categoria no momento.
                             <br/>Fique de olho para futuras atualizações!
@@ -158,7 +158,7 @@ export default function EventComponent() {
                                 <button
                                     onClick={() => handleRedirect(event.urlLinkAbout)}
                                     className="w-full mt-5 mb-6 py-2 rounded-lg text-purple-800 border border-purple-800/20 
-                                               font-semibold bg-white cursor-pointer hover:bg-purple-50 transition"
+                                               font-semibold bg-white cursor-pointer hover:bg-[#61ffc2] hover:text-black transition"
                                 >
                                     {event.type === "Beneficente" ? "Contribua" : "Sobre"}
                                 </button>
