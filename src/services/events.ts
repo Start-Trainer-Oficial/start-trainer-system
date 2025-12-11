@@ -7,9 +7,10 @@ export type Event = {
   time: string;
   type: string;
   slots: number;
-  about: string;
+  title: string;
   urlLink: string;
   urlLinkAbout: string;
+  about: string;
 };
 
 export type CreateEventData = {
@@ -19,9 +20,10 @@ export type CreateEventData = {
   location: string;
   time: string;
   type: string;
-  about: string;
+  title: string;
   urlLink: string;
   urlLinkAbout: string;
+  about: string;
 };
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;

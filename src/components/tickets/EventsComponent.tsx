@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MdSchedule, MdCalendarMonth, MdLocationPin, MdPeople } from "react-icons/md";
+import { MdCalendarMonth, MdLocationPin, MdPeople } from "react-icons/md";
 import { useAuth } from "@/context/authContext";
 import { useLoginModal } from "@/context/loginModalContext";
+import AboutEventsModal from "../modals/AboutEventsModal";
 
 import NavLink from "../NavLink";
 import Image from "next/image";
@@ -14,6 +15,7 @@ import { formatDateBR } from "@/utils/formatDate";
 export default function EventComponent() {
     const { user } = useAuth();
     const { openModal } = useLoginModal();
+    const [openAboutModal, setOpenAboutModal] = useState(false);
 
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
@@ -38,6 +40,10 @@ export default function EventComponent() {
             window.location.href = url;
         }
     };
+
+    const handleOpenAboutModal = () => {
+        setOpenAboutModal(true);
+    }
 
     const filteredEvents = events.filter((event) => {
         if (selectedOption === "Beneficentes") return event.type === "Beneficente";
@@ -71,7 +77,7 @@ export default function EventComponent() {
                         <h2 className="text-2xl font-bold text-[#381877] mb-2">Nenhum evento encontrado</h2>
                         <p className="text-gray-500 text-sm text-center px-4">
                             Não temos eventos disponíveis para esta categoria no momento.
-                            <br/>Fique de olho para futuras atualizações!
+                            <br />Fique de olho para futuras atualizações!
                         </p>
                     </div>
                 )}
@@ -79,9 +85,21 @@ export default function EventComponent() {
                 {filteredEvents.map((event) => (
                     <div key={event.id} className="mt-10 w-[360px] border border-gray-700/15 rounded-2xl text-center">
                         <div className="relative">
-                            <div className="absolute right-5 top-5 bg-green-200 border border-green-900/40 text-green-900 px-3 py-1 rounded-lg text-sm font-medium">
+                            <div
+                                className={`absolute right-5 top-5 
+    ${event.status === "Disponível"
+                                        ? "bg-green-200 border border-green-900/40 text-green-900"
+                                        : event.status === "Em breve"
+                                            ? "bg-orange-200 border border-orange-900/40 text-orange-900"
+                                            : event.status === "Finalizado" || event.status === "Esgotado"
+                                                ? "bg-red-200 border border-red-900/40 text-red-900"
+                                                : ""
+                                    }
+    px-3 py-1 rounded-lg text-sm font-medium`}
+                            >
                                 <span>{event.status}</span>
                             </div>
+
                             <Image
                                 src="/diary/trilha1.png"
                                 alt={event.name}
@@ -110,14 +128,13 @@ export default function EventComponent() {
                                                 <span className="text-sm text-gray-500 ml-1">{event.location}</span>
                                             </div>
                                             <div className="flex px-6 mt-3">
-                                                <span className="text-sm text-gray-500 ml-1">{event.about}</span>
+                                                <span className="text-sm text-gray-500 ml-1">{event.title}</span>
                                             </div>
                                         </>
                                     ) : (
                                         <>
                                             <div className="flex px-6 mt-3">
-                                                <MdSchedule className="inline-block text-[#5f2daf]" size={20} />
-                                                <span className="text-sm text-gray-500 ml-1">{event.about}</span>
+                                                <span className="text-sm text-gray-500 ml-1">{event.title}</span>
                                             </div>
                                             <div className="flex px-6 mt-3">
                                                 <MdLocationPin className="inline-block text-[#5f2daf]" size={20} />
@@ -144,19 +161,21 @@ export default function EventComponent() {
                             <div className="w-[93%] self-center border-b-[0.5px] border-gray-700/15 px-2 mt-5" />
 
                             <div className="flex gap-2 px-4 items-center justify-center w-full">
-                                {event.type !== "Beneficente" && (
-                                    <button
-                                        onClick={() => handleRedirect(event.urlLink)}
-                                        className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold
-                                                   bg-gradient-to-r from-[#5f2daf] via-[#733df2] to-[#9b4bff]
-                                                   transition-all cursor-pointer duration-300 hover:brightness-90"
-                                    >
-                                        Fazer inscrição
-                                    </button>
-                                )}
+                                {event.type !== "Beneficente" &&
+                                    event.status !== "Esgotado" &&
+                                    event.status !== "Em breve" &&
+                                    event.status !== "Finalizado" && (
+                                        <button
+                                            onClick={() => handleRedirect(event.urlLink)}
+                                            className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-[#381877] transition-all cursor-pointer duration-300 hover:brightness-90"
+                                        >
+                                            Fazer inscrição
+                                        </button>
+                                    )}
+
 
                                 <button
-                                    onClick={() => handleRedirect(event.urlLinkAbout)}
+                                    onClick={event.type === "Beneficente" ? () => handleRedirect(event.urlLinkAbout) : () => handleOpenAboutModal()}
                                     className="w-full mt-5 mb-6 py-2 rounded-lg text-purple-800 border border-purple-800/20 
                                                font-semibold bg-white cursor-pointer hover:bg-[#61ffc2] hover:text-black transition"
                                 >
@@ -167,6 +186,8 @@ export default function EventComponent() {
                     </div>
                 ))}
             </div>
+
+            <AboutEventsModal open={openAboutModal} onClose={() => setOpenAboutModal(false)} />
         </>
     );
 }

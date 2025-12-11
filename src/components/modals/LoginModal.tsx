@@ -15,6 +15,7 @@ export default function LoginModal() {
     const { openModal: openRegisterModal } = useRegisterModal();
     const { openModal: openForgotPasswordModal } = useForgotPasswordModal();
     const { loginUser: loginContext } = useAuth();
+    const [loading, setLoading] = useState(false);
 
     const [form, setForm] = useState({
         identifier: "",
@@ -35,13 +36,17 @@ export default function LoginModal() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const data = await loginUser(form.identifier.trim(), form.password);
             loginContext(data.user, data.token);
+            setLoading(false);
             closeModal();
         } catch (error: any) {
+            setLoading(false);
             console.error("Erro ao realizar login:", error?.message || error);
         }
+        setLoading(false);
     };
 
     const handleGoToRegister = () => {
@@ -106,7 +111,7 @@ export default function LoginModal() {
                         <button
                             className="w-[80%] h-12 bg-purple-600 text-white font-bold rounded-md cursor-pointer mt-6 hover:bg-[#61ffc2] hover:text-black transition-colors"
                         >
-                            Entrar
+                            {loading ? "Entrando..." : "Entrar"}
                         </button>
 
                         <button

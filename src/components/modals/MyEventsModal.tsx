@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdClose } from "react-icons/md";
-import NavLink from "../NavLink";
 import MyEventsComponent from "../tickets/MyEventsComponent";
 
 
