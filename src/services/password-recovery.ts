@@ -1,3 +1,4 @@
+// Solicitar código de recuperação de senha
 export async function requestPasswordReset(email: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/password/request`,
@@ -16,6 +17,7 @@ export async function requestPasswordReset(email: string) {
   return response.json();
 }
 
+// Validar código de recuperação
 export async function validateResetCode(email: string, code: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/password/validate`,
@@ -34,6 +36,7 @@ export async function validateResetCode(email: string, code: string) {
   return response.json();
 }
 
+// Redefinir senha
 export async function resetPassword(
   email: string,
   code: string,
@@ -56,7 +59,7 @@ export async function resetPassword(
   return response.json();
 }
 
-// 🔄 Reenviar código
+// Reenviar código
 export async function resendPasswordResetCode(email: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/resend-password-reset-code`,

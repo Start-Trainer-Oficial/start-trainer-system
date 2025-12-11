@@ -1,15 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { useResetPasswordModal } from "@/context/resetModalContext";
+import { useState, useEffect } from "react";
+import { useChangePasswordModal } from "@/context/changePasswordModalContext";
 import { resetPassword } from "@/services/password-recovery";
 import { MdClose } from "react-icons/md";
 
 export default function ChangePasswordModal() {
-  const { isOpen, closeModal } = useResetPasswordModal();
+  const { isOpen, closeModal } = useChangePasswordModal();
+
+  const [email, setEmail] = useState<string | null>(null);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setEmail(localStorage.getItem("recovery_email"));
+    }
+  }, []);
 
   if (!isOpen) return null;
 
@@ -19,7 +27,6 @@ export default function ChangePasswordModal() {
       return;
     }
 
-    const email = localStorage.getItem("recovery_email");
     if (!email) {
       alert("Email não encontrado. Refaça a recuperação de senha.");
       return;
@@ -27,10 +34,13 @@ export default function ChangePasswordModal() {
 
     try {
       setLoading(true);
+
       await resetPassword(email, "", newPassword);
+
       alert("Senha alterada com sucesso!");
       closeModal();
       localStorage.removeItem("recovery_email");
+
     } catch (err: any) {
       console.error(err);
       alert(err.message || "Erro ao trocar senha");
@@ -74,11 +84,10 @@ export default function ChangePasswordModal() {
         <button
           onClick={handleChangePassword}
           disabled={!newPassword.trim() || !confirmPassword.trim() || loading}
-          className={`w-full h-12 mt-4 rounded-md font-bold transition-colors ${
-            !newPassword.trim() || !confirmPassword.trim() || loading
-              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-              : "bg-[#5f2daf] hover:bg-[#61ffc2] hover:text-black text-white cursor-pointer"
-          }`}
+          className={`w-full h-12 mt-4 rounded-md font-bold transition-colors ${!newPassword.trim() || !confirmPassword.trim() || loading
+            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+            : "bg-[#5f2daf] hover:bg-[#61ffc2] hover:text-black text-white cursor-pointer"
+            }`}
         >
           {loading ? "Alterando..." : "Trocar senha"}
         </button>

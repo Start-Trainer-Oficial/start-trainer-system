@@ -1,19 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useResetPasswordModal } from "@/context/resetModalContext";
 import { validateResetCode } from "@/services/password-recovery";
 import { useChangePasswordModal } from "@/context/changePasswordModalContext";
 
 export default function ResetCodeModal() {
 
-    const {openModal : openChangePasswordModal} = useChangePasswordModal();
-    const email = localStorage.getItem("recovery_email") || "";
-
+    const { openModal: openChangePasswordModal } = useChangePasswordModal();
+    const [email, setEmail] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [digits, setDigits] = useState<string[]>(Array(6).fill(""));
     const { isOpen, closeModal } = useResetPasswordModal();
     if (!isOpen) return null;
 
-    const [digits, setDigits] = useState<string[]>(Array(6).fill(""));
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setEmail(localStorage.getItem("recovery_email"));
+        }
+    }, []);
 
     const handleChange = (value: string, index: number) => {
         if (!/^\d?$/.test(value)) return;
@@ -36,10 +41,13 @@ export default function ResetCodeModal() {
         }
 
         try {
-            await validateResetCode(email, finalCode);
+            setLoading(true);
+            await validateResetCode(email!, finalCode);
+            setLoading(false);
             closeModal();
             openChangePasswordModal();
         } catch (err: any) {
+            setLoading(false);
             console.error(err);
         }
 
@@ -83,7 +91,7 @@ export default function ResetCodeModal() {
                     className="w-full hover:bg-[#61ffc2] bg-[#5f2daf] hover:text-black text-white py-2 rounded-md 
                     transition cursor-pointer"
                 >
-                    Validar Código
+                    {loading ? "Validando..." : "Validar código"}
                 </button>
             </div>
         </div>

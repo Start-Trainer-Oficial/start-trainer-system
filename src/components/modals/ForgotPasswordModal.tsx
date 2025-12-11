@@ -10,16 +10,20 @@ export default function ForgotPasswordModal() {
   const { isOpen, closeModal } = useForgotPasswordModal();
   const { openModal: openResetCodeModal } = useResetPasswordModal();
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
   const handleSend = async () => {
     try {
+      setLoading(true);
       await requestPasswordReset(email);
       localStorage.setItem("recovery_email", email);
+      setLoading(false);
       closeModal();
       openResetCodeModal();
     } catch (err: any) {
+      setLoading(false);
         console.error(err);
     }
   };
@@ -52,7 +56,7 @@ export default function ForgotPasswordModal() {
           disabled={!email.trim()}
           className={`w-full h-12 mt-4 rounded-md font-bold transition-colors ${!email.trim() ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#5f2daf] hover:bg-[#61ffc2] hover:text-black text-white cursor-pointer'}`}
         >
-          Enviar
+          {loading ? "Enviando..." : "Enviar código"} 
         </button>
 
       </div>

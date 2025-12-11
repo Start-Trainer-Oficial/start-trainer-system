@@ -16,7 +16,7 @@ export default function Header() {
   const { user, logout, hydrated } = useAuth();
 
   const { openModal } = useLoginModal();
-  const {openModal: openRegisterModal} = useRegisterModal();
+  const { openModal: openRegisterModal } = useRegisterModal();
   const [openModalMyEvents, setOpenModalMyEvents] = useState(false);
 
   if (!hydrated) return null;
