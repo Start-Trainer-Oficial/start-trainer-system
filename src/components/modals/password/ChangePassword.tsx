@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useChangePasswordModal } from "@/context/changePasswordModalContext";
+import { useChangePasswordModal } from "@/context/password/changePasswordModalContext";
 import { resetPassword } from "@/services/password-recovery";
 import { MdClose } from "react-icons/md";
 

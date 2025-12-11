@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useForgotPasswordModal } from "@/context/forgotPasswordModalContext";
+import { useForgotPasswordModal } from "@/context/password/forgotPasswordModalContext";
 import { requestPasswordReset } from "@/services/password-recovery";
 import { MdClose } from "react-icons/md";
-import { useResetPasswordModal } from "@/context/resetModalContext";
+import { useResetPasswordModal } from "@/context/password/resetModalContext";
 
 export default function ForgotPasswordModal() {
   const { isOpen, closeModal } = useForgotPasswordModal();
@@ -24,7 +24,7 @@ export default function ForgotPasswordModal() {
       openResetCodeModal();
     } catch (err: any) {
       setLoading(false);
-        console.error(err);
+      console.error(err);
     }
   };
 
@@ -56,7 +56,7 @@ export default function ForgotPasswordModal() {
           disabled={!email.trim()}
           className={`w-full h-12 mt-4 rounded-md font-bold transition-colors ${!email.trim() ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#5f2daf] hover:bg-[#61ffc2] hover:text-black text-white cursor-pointer'}`}
         >
-          {loading ? "Enviando..." : "Enviar código"} 
+          {loading ? "Enviando..." : "Enviar código"}
         </button>
 
       </div>

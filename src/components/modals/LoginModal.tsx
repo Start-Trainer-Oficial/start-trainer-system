@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLoginModal } from "@/context/loginModalContext";
 import { useRegisterModal } from "@/context/registerModalContext";
-import { useForgotPasswordModal } from "@/context/forgotPasswordModalContext";
+import { useForgotPasswordModal } from "@/context/password/forgotPasswordModalContext";
 import { loginUser } from "@/services/user";
 import { useAuth } from "@/context/authContext";
 
@@ -12,7 +12,7 @@ import { MdClose } from "react-icons/md";
 
 export default function LoginModal() {
     const { isOpen, closeModal } = useLoginModal();
-    const { openModal: openRegisterModal } = useRegisterModal(); 
+    const { openModal: openRegisterModal } = useRegisterModal();
     const { openModal: openForgotPasswordModal } = useForgotPasswordModal();
     const { loginUser: loginContext } = useAuth();
 
@@ -46,12 +46,12 @@ export default function LoginModal() {
 
     const handleGoToRegister = () => {
         closeModal();
-        openRegisterModal();  
+        openRegisterModal();
     };
 
     const handleForgotPassword = () => {
         closeModal();
-        openForgotPasswordModal(); 
+        openForgotPasswordModal();
     }
 
     if (!isOpen) return null;
@@ -61,9 +61,9 @@ export default function LoginModal() {
             style={{ backdropFilter: 'blur(3px)' }}>
 
             <div className="w-full lg:w-[500px] h-full lg:h-[600px] bg-white lg:rounded-xl shadow-xl flex flex-col items-center relative">
-                
-                <button 
-                    onClick={closeModal} 
+
+                <button
+                    onClick={closeModal}
                     className="absolute right-10 top-8 w-6 h-6 items-center text-white cursor-pointer font-semibold"
                 >
                     <MdClose size={20} className="text-[#5f2daf]" />
@@ -84,7 +84,7 @@ export default function LoginModal() {
                     </h2>
 
                     <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center w-full">
-                        
+
                         <input
                             type="text"
                             placeholder="Email"
@@ -114,7 +114,7 @@ export default function LoginModal() {
                             type="button"
                             className="text-sm text-gray-500 mt-4"
                         >
-                            Não tem uma conta? 
+                            Não tem uma conta?
                             <span className="text-purple-600 cursor-pointer"> Cadastre-se</span>
                         </button>
 

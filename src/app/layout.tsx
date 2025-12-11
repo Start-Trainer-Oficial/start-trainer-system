@@ -11,12 +11,12 @@ import { LoginModalProvider } from "@/context/loginModalContext";
 import LoginModal from "@/components/modals/LoginModal";
 import { RegisterModalProvider } from "@/context/registerModalContext";
 import RegisterModal from "@/components/modals/RegisterModal";
-import { ForgotPasswordProvider } from "@/context/forgotPasswordModalContext";
-import ForgotPasswordModal from "@/components/modals/ForgotPasswordModal";
-import { ResetPasswordProvider } from "@/context/resetModalContext";
-import ResetCodeModal from "@/components/modals/ResetCodeMailModal";
-import { ChangePasswordModalProvider } from "@/context/changePasswordModalContext";
-import ChangePasswordModal from "@/components/modals/ChangePassword";
+import { ForgotPasswordProvider } from "@/context/password/forgotPasswordModalContext";
+import ForgotPasswordModal from "@/components/modals/password/ForgotPasswordModal";
+import { ResetPasswordProvider } from "@/context/password/resetModalContext";
+import ResetCodeModal from "@/components/modals/password/ResetCodeMailModal";
+import { ChangePasswordModalProvider } from "@/context/password/changePasswordModalContext";
+import ChangePasswordModal from "@/components/modals/password/ChangePassword";
 
 const inter = Inter({
   subsets: ["latin"],

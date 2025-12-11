@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useResetPasswordModal } from "@/context/resetModalContext";
+import { useResetPasswordModal } from "@/context/password/resetModalContext";
 import { validateResetCode } from "@/services/password-recovery";
-import { useChangePasswordModal } from "@/context/changePasswordModalContext";
+import { useChangePasswordModal } from "@/context/password/changePasswordModalContext";
 
 export default function ResetCodeModal() {
 
