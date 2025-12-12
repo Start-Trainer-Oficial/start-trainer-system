@@ -4,9 +4,14 @@ import { MdClose } from "react-icons/md";
 interface AboutEventsModalProps {
     open: boolean;
     onClose?: () => void;
+    event?: {
+        name: string;
+        about: string;
+        title: string;
+    };
 }
 
-export default function AboutEventsModal({ open, onClose }: AboutEventsModalProps) {
+export default function AboutEventsModal({ open, onClose, event }: AboutEventsModalProps) {
 
     useEffect(() => {
         const root = document.getElementById("__next") || document.getElementById("root");
@@ -39,12 +44,12 @@ export default function AboutEventsModal({ open, onClose }: AboutEventsModalProp
         >
             <div
                 className="
-          relative bg-white 
-          max-w-[414px] h-screen md:max-w-[600px] md:h-[700px] 
-          w-full h-auto
-          rounded-xl shadow-xl px-7 py-10
-          overflow-y-auto
-        "
+                    relative bg-white 
+                    max-w-[414px] h-screen md:max-w-[600px] md:h-[700px] 
+                    w-full h-auto
+                    rounded-xl shadow-xl px-7 py-10
+                    overflow-y-auto thin-grey-scrollbar
+                "
             >
                 <button
                     onClick={handleClose}
@@ -53,8 +58,10 @@ export default function AboutEventsModal({ open, onClose }: AboutEventsModalProp
                     <MdClose size={22} />
                 </button>
 
-                <h2 className="text-2xl font-semibold text-[#5f2daf] mb-4">Sobre os Eventos</h2>
+                <h1 className="text-2xl font-semibold text-[#5f2daf]">{event?.name}</h1>
+                <h1 className="text-lg font-semibold text-black mb-6">{event?.title}</h1>
 
+                <div className="text-gray-700 whitespace-pre-line text-start px-4 mt-2">{event?.about}</div>
 
             </div>
         </div>

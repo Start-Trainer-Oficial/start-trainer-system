@@ -183,11 +183,10 @@ export default function EventComponent() {
                                 </button>
                             </div>
                         </div>
+                        <AboutEventsModal open={openAboutModal} event={event} onClose={() => setOpenAboutModal(false)} />
                     </div>
                 ))}
             </div>
-
-            <AboutEventsModal open={openAboutModal} onClose={() => setOpenAboutModal(false)} />
         </>
     );
 }

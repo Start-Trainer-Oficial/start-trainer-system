@@ -36,16 +36,15 @@ export default function ProfileDropdown({ user, menuItems }: ProfileDropdownProp
           <img
             src={user.avatarUrl}
             alt="Avatar"
-            className="w-8 h-8 rounded-full object-cover "
+            className="w-7 h-7 rounded-full object-cover "
           />
         )}
         <p className="font-semibold text-gray-800">Olá, {user.name.split(" ")[0]}!</p>
       </div>
 
       <div
-        className={`absolute right-0 mt-2 w-56 rounded-xl border border-gray-200 bg-white shadow-lg transition-all duration-200 ease-out ${
-          isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-        } origin-top-right`}
+        className={`absolute right-0 mt-2 w-56 rounded-xl border border-gray-200 bg-white shadow-lg transition-all duration-200 ease-out ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+          } origin-top-right`}
       >
 
         <div className="px-4 py-3 border-b border-gray-100">

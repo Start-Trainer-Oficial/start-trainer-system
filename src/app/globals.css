@@ -17,3 +17,33 @@ html, body {
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* Utility to hide scrollbars on any scrollable element */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Thin purple scrollbar for specific scrollable containers */
+.thin-grey-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #c7c7c7 transparent; /* Firefox: thumb, track */
+}
+.thin-grey-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.thin-grey-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thin-grey-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #dfdfdf;
+  border-radius: 9999px;
+  border: 1px solid transparent; /* gives a bit of padding-like effect */
+  background-clip: padding-box;
+}
+.thin-grey-scrollbar::-webkit-scrollbar-thumb:hover {
+  filter: brightness(0.95);
+}
