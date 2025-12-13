@@ -25,7 +25,7 @@ export default function Header() {
     <div className="flex w-full lg:gap-[10%] gap-4 justify-center items-center h-20 border-b border-gray-200">
 
       <Image
-        src="/header/start.png"
+        src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647072/start_czqyaz.png"
         alt="Start Trainer Oficial"
         width={1000}
         height={227}
@@ -53,7 +53,7 @@ export default function Header() {
       ) : (
         <div className="flex gap-2 ml-6 items-center">
           <ProfileDropdown
-            user={{ name: `${user.name}`, email: `${user.email}`, avatarUrl: "/header/userIcon.png" }}
+            user={{ name: `${user.name}`, email: `${user.email}`, avatarUrl: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647074/userIcon_oy1erm.png" }}
             menuItems={[
               {
                 label: (

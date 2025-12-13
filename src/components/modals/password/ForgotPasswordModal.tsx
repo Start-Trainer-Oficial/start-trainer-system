@@ -6,6 +6,8 @@ import { requestPasswordReset } from "@/services/password-recovery";
 import { MdClose } from "react-icons/md";
 import { useResetPasswordModal } from "@/context/password/resetModalContext";
 
+import toast from "react-hot-toast";
+
 export default function ForgotPasswordModal() {
   const { isOpen, closeModal } = useForgotPasswordModal();
   const { openModal: openResetCodeModal } = useResetPasswordModal();
@@ -24,7 +26,7 @@ export default function ForgotPasswordModal() {
       openResetCodeModal();
     } catch (err: any) {
       setLoading(false);
-      console.error(err);
+      toast.error(err);
     }
   };
 

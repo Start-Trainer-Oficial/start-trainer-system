@@ -20,6 +20,7 @@ interface EventRegisterModalProps {
         id: number;
         name: string;
         price: number;
+        imagekitUrl: string;
     };
     isOpen: boolean;
     onClose?: () => void;
@@ -102,6 +103,17 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
 
     const onlyDigits = (s: string) => s.replace(/\D/g, "");
 
+    function formatInputDate(value: string) {
+        const digits = value.replace(/\D/g, "").slice(0, 8);
+        if (!digits) return "";
+
+        let result = digits.slice(0, 2);
+        if (digits.length > 2) result += "/" + digits.slice(2, 4);
+        if (digits.length > 4) result += "/" + digits.slice(4, 8);
+        return result;
+    }
+
+
     if (!isOpen) return null;
 
     return (
@@ -151,17 +163,28 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
                         }}
                         className="w-[90%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3" />
 
-                    <input type="text" placeholder="Data de nascimento *" value={formatDateBR(form.birthDate)}
+                    <input
+                        type="text"
+                        placeholder="Data de nascimento *"
+                        value={
+                            /^\d{4}-\d{2}-\d{2}$/.test(form.birthDate)
+                                ? formatDateBR(form.birthDate) // ISO -> DD/MM/YYYY
+                                : formatInputDate(form.birthDate) // enquanto digita
+                        }
                         onChange={e => {
-                            const d = onlyDigits(e.target.value).slice(0, 8);
-                            if (d.length === 8) {
-                                const iso = `${d.slice(4, 8)}-${d.slice(2, 4)}-${d.slice(0, 2)}`;
+                            const digits = e.target.value.replace(/\D/g, "").slice(0, 8);
+
+                            if (digits.length === 8) {
+                                // converte para ISO e salva no state
+                                const iso = `${digits.slice(4, 8)}-${digits.slice(2, 4)}-${digits.slice(0, 2)}`;
                                 setForm({ ...form, birthDate: iso });
                             } else {
-                                setForm({ ...form, birthDate: d });
+                                setForm({ ...form, birthDate: digits });
                             }
                         }}
-                        className="w-[90%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3" />
+                        className="w-[90%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3"
+                    />
+
 
                     <div className="w-[90%] py-4">
                         <div className="flex gap-2">
@@ -205,7 +228,7 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
                     </div>
 
                     <Image
-                        src="/modals/eventRegister/kit.png"
+                        src={event.imagekitUrl}
                         alt="Tabela de tamanhos de camisetas"
                         width={400}
                         height={150}
@@ -213,7 +236,7 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
                     />
 
                     <Image
-                        src="/modals/eventRegister/shirtSize.jpg"
+                        src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765646967/shirtSize_h3dwrb.jpg"
                         alt="Tabela de tamanhos de camisetas"
                         width={400}
                         height={150}

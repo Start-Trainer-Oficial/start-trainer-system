@@ -5,6 +5,8 @@ import { useChangePasswordModal } from "@/context/password/changePasswordModalCo
 import { resetPassword } from "@/services/password-recovery";
 import { MdClose } from "react-icons/md";
 
+import toast from "react-hot-toast";
+
 export default function ChangePasswordModal() {
   const { isOpen, closeModal } = useChangePasswordModal();
 
@@ -23,12 +25,12 @@ export default function ChangePasswordModal() {
 
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
-      alert("As senhas não coincidem");
+      toast.error("As senhas não coincidem");
       return;
     }
 
     if (!email) {
-      alert("Email não encontrado. Refaça a recuperação de senha.");
+      toast.error("Email não encontrado. Refaça a recuperação de senha.");
       return;
     }
 
@@ -37,13 +39,12 @@ export default function ChangePasswordModal() {
 
       await resetPassword(email, "", newPassword);
 
-      alert("Senha alterada com sucesso!");
+      toast.success("Senha alterada com sucesso!");
       closeModal();
       localStorage.removeItem("recovery_email");
 
     } catch (err: any) {
-      console.error(err);
-      alert(err.message || "Erro ao trocar senha");
+      toast.error(err.message || "Erro ao trocar senha");
     } finally {
       setLoading(false);
     }

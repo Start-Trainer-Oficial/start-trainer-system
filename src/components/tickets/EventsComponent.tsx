@@ -57,7 +57,7 @@ export default function EventComponent() {
         }
     };
 
-    const handleRedirect = (url?: string) => {
+    const handleRedirect = () => {
         if (!user) {
             openModal();
         } else {
@@ -116,7 +116,7 @@ export default function EventComponent() {
                 {!loading && filteredEvents.length === 0 && (
                     <div className="w-full flex flex-col justify-center items-center py-10">
                         <Image
-                            src="/diary/warning.png"
+                            src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647052/warning_e1nvl8.png"
                             alt="Nenhum evento"
                             width={150}
                             height={150}
@@ -148,7 +148,7 @@ export default function EventComponent() {
                             </div>
 
                             <Image
-                                src="/diary/trilha1.png"
+                                src={event.imageUrl}
                                 alt={event.name}
                                 width={390}
                                 height={240}
@@ -223,7 +223,7 @@ export default function EventComponent() {
                                             </button>
                                         ) : (
                                             <button
-                                                onClick={() => handleRedirect(event.urlLink)}
+                                                onClick={() => handleRedirect()}
                                                 className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-[#381877] transition-all cursor-pointer duration-300 hover:brightness-90"
                                             >
                                                 Fazer inscrição
@@ -233,7 +233,7 @@ export default function EventComponent() {
 
 
                                 <button
-                                    onClick={event.type === "Beneficente" ? () => handleRedirect(event.urlLinkAbout) : () => handleOpenAboutModal()}
+                                    onClick={event.type === "Beneficente" ? () => handleRedirect() : () => handleOpenAboutModal()}
                                     className="w-full mt-5 mb-6 py-2 rounded-lg text-purple-800 border border-purple-800/20 
                                                font-semibold bg-white cursor-pointer hover:bg-[#61ffc2] hover:text-black transition"
                                 >

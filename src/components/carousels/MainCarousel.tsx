@@ -5,15 +5,15 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const images = [
     {
-        url: "/carousel/capa.jpg",
+        url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647033/capa_wqcjpz.jpg",
         link: "https://chat.whatsapp.com/DqNvn6ZmHYE7CfrbYTFks8?mode=ems_share_t"
     },
     {
-        url: "/carousel/capa1.jpg",
+        url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647037/capa1_ub94gy.jpg",
         link: "https://www.instagram.com/starttraineroficial/"
     },
     {
-        url: "/carousel/capa2.jpg",
+        url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647033/capa2_crnl5w.jpg",
         link: "#agenda"
     }
 ];

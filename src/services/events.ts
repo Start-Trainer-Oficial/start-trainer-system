@@ -8,7 +8,8 @@ export type Event = {
   type: string;
   slots: number;
   title: string;
-  urlLink: string;
+  imageUrl: string;
+  imagekitUrl: string;
   urlLinkAbout: string;
   about: string;
 };
@@ -21,7 +22,8 @@ export type CreateEventData = {
   time: string;
   type: string;
   title: string;
-  urlLink: string;
+  imageUrl: string;
+  imagekitUrl: string;
   urlLinkAbout: string;
   about: string;
 };

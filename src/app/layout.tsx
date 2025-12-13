@@ -26,9 +26,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Start Trainer Oficial ®",
+  title: "Start Trainer ®",
   icons: {
-    icon: "/logos/logo.png",
+    icon: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647128/logo_jlsna8.png",
   }
 };
 
@@ -49,7 +49,7 @@ export default function RootLayout({
                   <ChangePasswordModalProvider>
                     <Header />
                     {children}
-                    <Toaster position="top-right" />
+                    <Toaster position="top-center" />
                     <Footer />
                     <LoginModal />
                     <RegisterModal />

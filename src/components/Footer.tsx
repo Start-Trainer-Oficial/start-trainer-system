@@ -6,15 +6,15 @@ export default function Footer() {
         <div className="flex flex-col text-white items-center justify-center w-full h-auto py-10 bg-[#5cffb8]">
             <div className="flex flex-col lg:flex-row justify-between items-center w-full max-w-7xl px-4 gap-8">
                 <div className="flex flex-col items-center">
-                    <Image src="/header/start.png" alt="Logo" width={600} height={400} className="object-contain w-[150px] lg:w-[200px]" />
+                    <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647072/start_czqyaz.png" alt="Logo" width={600} height={400} className="object-contain w-[150px] lg:w-[200px]" />
                     <p className="text-xs text-black text-center mt-4">© 2026 Start Trainer Oficial. Todos os direitos reservados.</p>
                 </div>
 
                 <div className="flex flex-col  lg:self-center">
                     <div className="flex justify-center gap-4">
-                        <Image src="/footer/logoTrekking.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
-                        <Image src="/footer/logoRunners.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
-                        <Image src="/footer/logoInstituto.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
+                        <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647062/logoTrekking_bvrjd5.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
+                        <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647062/logoRunners_pzttxv.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
+                        <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647062/logoInstituto_zeh16p.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
                     </div>
                 </div>
 

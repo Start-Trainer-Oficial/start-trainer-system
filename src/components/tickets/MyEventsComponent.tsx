@@ -19,14 +19,17 @@ export default function MyEventsComponent({ registration }: MyEventsComponentPro
 
             <div className="flex flex-col md:flex-row md:items-center md:justify-between relative border border-gray-700/15 rounded-2xl p-3">
 
-                <div className="relative w-full h-40 md:w-[100px] md:h-[100px] rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
-                    <Image
-                        src={event.urlLink || "/diary/trilha1.png"}
-                        alt={event.name}
-                        fill
-                        className="object-cover"
-                    />
-                </div>
+                {/* <div className="relative w-full h-40 md:w-[100px] md:h-[100px] rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                    {event.imageUrl && (
+                        <Image
+                            src={event.imageUrl}
+                            alt={event.name}
+                            fill
+                            className="object-cover"
+                        />
+                    )}
+
+                </div> */}
 
                 <div className="flex flex-col justify-between mt-2 md:mt-0 md:ml-4 ml-0 w-full md:flex-1">
                     <h1 className="font-bold text-base uppercase text-gray-800">

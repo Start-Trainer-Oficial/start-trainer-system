@@ -7,7 +7,7 @@ export default function Home() {
     <div className="flex flex-col w-full">
 
       <div className="pb-12"
-        style={{ backgroundImage: 'url(/backgrounds/main.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+        style={{ backgroundImage: 'url(https://res.cloudinary.com/dytw21kw2/image/upload/v1765647023/main_lr3jsg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
         <Carousel />
       </div>
@@ -19,7 +19,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-start justify-center lg:px-[20%] mb-20">
-        <h1 className="font-bold text-3xl uppercase ml-6 mt-20 text-[#381877]">CONFIRA 🔥</h1>
+        <h1 className="font-bold text-3xl uppercase ml-6 mt-20 text-[#381877]">EM BREVE 🔥</h1>
         <p className="mt-1 ml-6 font-bold opacity-70">Pra você ficar de olho!</p>
         <ComingSoon />
       </div>

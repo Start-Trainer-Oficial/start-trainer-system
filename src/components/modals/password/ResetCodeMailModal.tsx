@@ -5,6 +5,8 @@ import { useResetPasswordModal } from "@/context/password/resetModalContext";
 import { validateResetCode } from "@/services/password-recovery";
 import { useChangePasswordModal } from "@/context/password/changePasswordModalContext";
 
+import toast from "react-hot-toast";
+
 export default function ResetCodeModal() {
 
     const { openModal: openChangePasswordModal } = useChangePasswordModal();
@@ -37,7 +39,7 @@ export default function ResetCodeModal() {
         const finalCode = digits.join("");
 
         if (finalCode.length !== 6) {
-            return alert("Digite os 6 dígitos.");
+            return toast.error("Digite os 6 dígitos.");
         }
 
         try {
@@ -48,7 +50,7 @@ export default function ResetCodeModal() {
             openChangePasswordModal();
         } catch (err: any) {
             setLoading(false);
-            console.error(err);
+            toast.error(err);
         }
 
     };
