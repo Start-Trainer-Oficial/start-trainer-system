@@ -192,7 +192,7 @@ export default function EventComponent() {
 
                                     {event.slots > 0 && (
                                         <div className="flex px-6 mt-3">
-                                            <MdPeople className="inline-block text-[#5f2daf]" size={20} />
+                                            <MdPeople className="inline-block text-[#5f2daf]" size={19} />
                                             <span className="text-sm text-gray-500 ml-1">{event.slots}</span>
                                         </div>
                                     )}
