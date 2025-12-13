@@ -4,6 +4,7 @@ import { AuthProvider } from "@/context/authContext";
 
 import Header from "@/components/header/Header";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 import { Inter } from "next/font/google";
 
@@ -48,6 +49,7 @@ export default function RootLayout({
                   <ChangePasswordModalProvider>
                     <Header />
                     {children}
+                    <Toaster position="top-right" />
                     <Footer />
                     <LoginModal />
                     <RegisterModal />

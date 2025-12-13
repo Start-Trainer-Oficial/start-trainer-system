@@ -9,6 +9,7 @@ import { loginUser } from "@/services/user";
 import { useAuth } from "@/context/authContext";
 
 import { MdClose } from "react-icons/md";
+import toast from "react-hot-toast";
 
 export default function LoginModal() {
     const { isOpen, closeModal } = useLoginModal();
@@ -44,7 +45,7 @@ export default function LoginModal() {
             closeModal();
         } catch (error: any) {
             setLoading(false);
-            console.error("Erro ao realizar login:", error?.message || error);
+            toast.error(error?.message || error);
         }
         setLoading(false);
     };

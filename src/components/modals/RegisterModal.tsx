@@ -3,13 +3,19 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
-
+import { useAuth } from "@/context/authContext";
 import { useRegisterModal } from "@/context/registerModalContext";
-import { registerUser } from "@/services/user";
+import { registerUser, loginUser } from "@/services/user";
+
+import toast from "react-hot-toast";
+
+import { formatPhoneBR } from "@/utils/formatPhone";
+import { formatCpf } from "@/utils/formatCpf";
 
 export default function RegisterModal() {
     const { isOpen, closeModal } = useRegisterModal();
     const [loading, setLoading] = useState(false);
+    const { loginUser: loginContext } = useAuth();
 
     const [form, setForm] = useState({
         name: "",
@@ -34,23 +40,22 @@ export default function RegisterModal() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+
         try {
             const response = await registerUser(form);
-            if (response.status === 201) {
-                alert("Usuário registrado com sucesso!");
-                setLoading(false);
-                closeModal();
-            } else {
-                alert("Erro ao registrar usuário. Por favor, tente novamente.");
-                setLoading(true);
-            }
+            toast.success("Usuário registrado com sucesso!");
+            const loginData = await loginUser(form.email, form.password);
+            loginContext(loginData.user, loginData.token);
+            closeModal();
 
         } catch (error: any) {
-            console.error("Erro ao registrar usuário:", error?.message || error);
-
+            toast.error(error?.message || "Erro ao registrar usuário");
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
+
+    const onlyDigits = (s: string) => s.replace(/\D/g, "");
 
     if (!isOpen) return null;
 
@@ -84,7 +89,12 @@ export default function RegisterModal() {
                             placeholder="Nome *"
                             className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3 mt-8" />
 
-                        <input type="text" onChange={e => setForm({ ...form, cpf: e.target.value })}
+                        <input type="text"
+                            value={formatCpf(form.cpf)}
+                            onChange={e => {
+                                const digits = onlyDigits(e.target.value).slice(0, 11);
+                                setForm({ ...form, cpf: digits })
+                            }}
                             placeholder="CPF *"
                             className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3 mt-3" />
 
@@ -92,9 +102,16 @@ export default function RegisterModal() {
                             placeholder="Email *"
                             className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3 mt-3" />
 
-                        <input type="text" onChange={e => setForm({ ...form, phone: e.target.value })}
+                        <input
+                            type="text"
                             placeholder="Telefone *"
-                            className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3 mt-3" />
+                            value={formatPhoneBR(form.phone)}
+                            onChange={e => {
+                                const digits = onlyDigits(e.target.value).slice(0, 11);
+                                setForm({ ...form, phone: digits });
+                            }}
+                            className="w-[80%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3 mt-3"
+                        />
 
                         <input type="password" onChange={e => setForm({ ...form, password: e.target.value })}
                             placeholder="Senha *"
@@ -120,3 +137,7 @@ export default function RegisterModal() {
         </div>
     );
 }
+function loginContext(user: any, token: any) {
+    throw new Error("Function not implemented.");
+}
+

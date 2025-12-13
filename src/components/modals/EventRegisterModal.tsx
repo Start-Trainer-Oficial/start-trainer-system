@@ -6,7 +6,14 @@ import { useAuth } from "@/context/authContext";
 import { MdClose } from "react-icons/md";
 import { registerInEvent } from "@/services/events";
 
+import { formatPhoneBR } from "@/utils/formatPhone";
+import { formatDateBR } from "@/utils/formatDate";
+import { formatCpf } from "@/utils/formatCpf";
+
 import Image from "next/image";
+
+import toast from "react-hot-toast";
+
 
 interface EventRegisterModalProps {
     event: {
@@ -72,7 +79,7 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
             };
 
             const res = await registerInEvent(event.id, payload);
-            alert("Inscrição realizada com sucesso!");
+            toast.success("Inscrição realizada!");
             if (onRegistered) onRegistered();
             try {
                 window.dispatchEvent(new Event('registration:created'));
@@ -80,8 +87,7 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
             }
             handleClose();
         } catch (error: any) {
-            console.error("Erro ao registrar no evento:", error?.message || error);
-            alert(error?.message || "Erro ao registrar no evento");
+            toast.error(error?.message || "Erro ao registrar no evento");
         } finally {
             setLoading(false);
         }
@@ -95,36 +101,6 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
         new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 
     const onlyDigits = (s: string) => s.replace(/\D/g, "");
-
-    const formatPhoneDisplay = (digits = "") => {
-        const d = onlyDigits(digits).slice(0, 11);
-        if (!d) return "";
-        if (d.length <= 2) return `(${d}`;
-        if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
-        if (d.length === 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
-        return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-    };
-
-    const formatCPFDisplay = (digits = "") => {
-        const d = onlyDigits(digits).slice(0, 11);
-        if (!d) return "";
-        if (d.length <= 3) return d;
-        if (d.length <= 6) return `${d.slice(0, 3)}.${d.slice(3)}`;
-        if (d.length <= 9) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`;
-        return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`;
-    };
-
-    const formatDateDisplay = (value = "") => {
-        if (!value) return "";
-        if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-            const [y, m, d] = value.split("-");
-            return `${d}/${m}/${y}`;
-        }
-        const d = onlyDigits(value).slice(0, 8);
-        if (d.length <= 2) return d;
-        if (d.length <= 4) return `${d.slice(0, 2)}/${d.slice(2)}`;
-        return `${d.slice(0, 2)}/${d.slice(2, 4)}/${d.slice(4, 8)}`;
-    };
 
     if (!isOpen) return null;
 
@@ -161,21 +137,21 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
                         readOnly
                         className="w-[90%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3 cursor-not-allowed" />
 
-                    <input type="text" placeholder="Telefone *" value={formatPhoneDisplay(form.phone)}
+                    <input type="text" placeholder="Telefone *" value={formatPhoneBR(form.phone)}
                         onChange={e => {
                             const digits = onlyDigits(e.target.value).slice(0, 11);
                             setForm({ ...form, phone: digits });
                         }}
                         className="w-[90%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3" />
 
-                    <input type="text" placeholder="CPF *" value={formatCPFDisplay(form.cpf)}
+                    <input type="text" placeholder="CPF *" value={formatCpf(form.cpf)}
                         onChange={e => {
                             const digits = onlyDigits(e.target.value).slice(0, 11);
                             setForm({ ...form, cpf: digits });
                         }}
                         className="w-[90%] text-purple-700 placeholder:text-black/40 h-12 border border-gray-200 outline-none rounded-md px-3" />
 
-                    <input type="text" placeholder="Data de nascimento *" value={formatDateDisplay(form.birthDate)}
+                    <input type="text" placeholder="Data de nascimento *" value={formatDateBR(form.birthDate)}
                         onChange={e => {
                             const d = onlyDigits(e.target.value).slice(0, 8);
                             if (d.length === 8) {

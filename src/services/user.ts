@@ -15,13 +15,14 @@ export async function registerUser(data: CreateUserData) {
     body: JSON.stringify(data),
   });
 
+  const resData = await response.json();
+
   if (!response.ok) {
-    console.log("Failed to register user", data);
+    throw new Error(resData.message || "Erro ao registrar usuário");
   }
 
-  return response.json();
+  return resData;
 }
-
 export async function loginUser(email: string, password: string) {
   const response = await fetch(`${process.env.API_URL}/users/login`, {
     method: "POST",
@@ -29,12 +30,12 @@ export async function loginUser(email: string, password: string) {
     body: JSON.stringify({ identifier: email, password }),
   });
 
+  const data = await response.json(); // lê o JSON uma vez
+
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Erro ao logar");
+    throw new Error(data.message || "Erro ao logar");
   }
 
-  const data = await response.json();
   localStorage.setItem("token", data.token);
   localStorage.setItem("user", JSON.stringify(data.user));
 
