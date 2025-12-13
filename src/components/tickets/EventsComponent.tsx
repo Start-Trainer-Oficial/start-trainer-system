@@ -1,24 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MdCalendarMonth, MdLocationPin, MdPeople } from "react-icons/md";
+import { MdCalendarMonth, MdLocationPin, MdPeople, MdCheckCircle } from "react-icons/md";
 import { useAuth } from "@/context/authContext";
 import { useLoginModal } from "@/context/loginModalContext";
+
 import AboutEventsModal from "../modals/AboutEventsModal";
+import EventRegisterModal from "../modals/EventRegisterModal";
 
 import NavLink from "../NavLink";
 import Image from "next/image";
 
-import { getEvents, Event } from "@/services/events";
+import { getEvents, Event, getMyEvents, EventRegistration } from "@/services/events";
 import { formatDateBR } from "@/utils/formatDate";
 
 export default function EventComponent() {
-    const { user } = useAuth();
+    const { user, email } = useAuth();
     const { openModal } = useLoginModal();
     const [openAboutModal, setOpenAboutModal] = useState(false);
 
-    const [events, setEvents] = useState<Event[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const [allEvents, setAllEvents] = useState<Event[]>([]);
+    const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
     const [loading, setLoading] = useState(true);
+    const [regLoading, setRegLoading] = useState(false);
 
     type OptionType = "Trilhas" | "Corridas" | "Beneficentes";
     const options = ["Trilhas", "Corridas", "Beneficentes"] as const;
@@ -28,16 +34,34 @@ export default function EventComponent() {
 
     useEffect(() => {
         getEvents()
-            .then((data) => setEvents(data))
+            .then((data) => setAllEvents(data))
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
     }, []);
 
+    useEffect(() => {
+        if (!email) return;
+        fetchRegistrations();
+    }, [email]);
+
+    const fetchRegistrations = async () => {
+        if (!email) return;
+        setRegLoading(true);
+        try {
+            const regs = await getMyEvents(email);
+            setRegistrations(regs);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setRegLoading(false);
+        }
+    };
+
     const handleRedirect = (url?: string) => {
         if (!user) {
             openModal();
-        } else if (url) {
-            window.location.href = url;
+        } else {
+            setIsOpen(true);
         }
     };
 
@@ -45,10 +69,12 @@ export default function EventComponent() {
         setOpenAboutModal(true);
     }
 
-    const filteredEvents = events.filter((event) => {
+    const filteredEvents = allEvents.filter((event) => {
         if (selectedOption === "Beneficentes") return event.type === "Beneficente";
         return event.type === selectedOption;
     });
+
+    const registeredEventIds = new Set(registrations.map((r) => r.event.id));
 
     return (
         <>
@@ -133,7 +159,7 @@ export default function EventComponent() {
                                         </>
                                     ) : (
                                         <>
-                                            <div className="flex px-6 mt-3">
+                                            <div className="flex px-6 mt-3 max-w-[260px]">
                                                 <span className="text-sm text-gray-500 ml-1">{event.title}</span>
                                             </div>
                                             <div className="flex px-6 mt-3">
@@ -152,7 +178,7 @@ export default function EventComponent() {
                                 </div>
 
                                 {event.price > 0 && (
-                                    <div className="absolute border border-gray-700/20 w-22 h-17 rounded-xl top-2 right-10 mt-16 flex flex-col items-center justify-center">
+                                    <div className="absolute border border-gray-700/20 w-22 h-17 rounded-xl top-2 right-6 mt-16 flex flex-col items-center justify-center">
                                         <h1 className="font-bold text-xl text-[#5f2daf]">R${event.price}</h1>
                                     </div>
                                 )}
@@ -165,12 +191,23 @@ export default function EventComponent() {
                                     event.status !== "Esgotado" &&
                                     event.status !== "Em breve" &&
                                     event.status !== "Finalizado" && (
-                                        <button
-                                            onClick={() => handleRedirect(event.urlLink)}
-                                            className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-[#381877] transition-all cursor-pointer duration-300 hover:brightness-90"
-                                        >
-                                            Fazer inscrição
-                                        </button>
+                                        registeredEventIds.has(event.id) ? (
+                                            <button
+                                                disabled
+                                                aria-disabled
+                                                className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-gray-400 flex items-center justify-center"
+                                            >
+                                                <MdCheckCircle className="mr-2 text-white" size={18} />
+                                                Já inscrito
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => handleRedirect(event.urlLink)}
+                                                className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-[#381877] transition-all cursor-pointer duration-300 hover:brightness-90"
+                                            >
+                                                Fazer inscrição
+                                            </button>
+                                        )
                                     )}
 
 
@@ -183,7 +220,11 @@ export default function EventComponent() {
                                 </button>
                             </div>
                         </div>
+
                         <AboutEventsModal open={openAboutModal} event={event} onClose={() => setOpenAboutModal(false)} />
+
+                        <EventRegisterModal event={event} isOpen={isOpen} onClose={() => setIsOpen(false)} onRegistered={fetchRegistrations} />
+
                     </div>
                 ))}
             </div>

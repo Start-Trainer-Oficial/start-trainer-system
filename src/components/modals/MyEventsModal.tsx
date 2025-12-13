@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/authContext";
+
 import { MdClose } from "react-icons/md";
 import MyEventsComponent from "../tickets/MyEventsComponent";
+import { getMyEvents, EventRegistration } from "@/services/events";
 
 
 type MyEventsProps = {
@@ -11,6 +14,53 @@ type MyEventsProps = {
 }
 
 export default function MyEventsModal({ openModalEvents, setOpenModalEvents }: MyEventsProps) {
+    const { email } = useAuth();
+    const [events, setEvents] = useState<EventRegistration[] | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const fetchMyEvents = async () => {
+        if (!email) return;
+        setLoading(true);
+        try {
+            const data = await getMyEvents(email);
+            setEvents(data);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        const root = document.getElementById("__next") || document.getElementById("root");
+
+        if (openModalEvents) {
+            document.body.style.overflow = "hidden";
+            document.documentElement.style.overflow = "hidden";
+            if (root) root.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+            document.documentElement.style.overflow = "auto";
+            if (root) root.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+            document.documentElement.style.overflow = "auto";
+            if (root) root.style.overflow = "auto";
+        };
+    }, [openModalEvents]);
+
+    useEffect(() => {
+        fetchMyEvents();
+        const handler = () => fetchMyEvents();
+        window.addEventListener('registration:created', handler);
+        return () => window.removeEventListener('registration:created', handler);
+    }, [email]);
+
+    useEffect(() => {
+        if (openModalEvents) fetchMyEvents();
+    }, [openModalEvents]);
 
     useEffect(() => {
         const element = document.documentElement;
@@ -49,9 +99,16 @@ export default function MyEventsModal({ openModalEvents, setOpenModalEvents }: M
 
                 {/* <NavLink labels={["Eventos ativos", "Passados"]} options={["Eventos ativos", "Passados"]} /> */}
 
-                <div className="flex-wrap">
-
-                    <MyEventsComponent />
+                <div className="flex-wrap w-full">
+                    {loading ? (
+                        <p className="text-sm text-center w-full mt-6">Carregando...</p>
+                    ) : events && events.length > 0 ? (
+                        events.map((ev) => (
+                            <MyEventsComponent key={ev.registrationId} registration={ev} />
+                        ))
+                    ) : (
+                        <p className="text-sm text-center w-full mt-6">Você não tem eventos cadastrados.</p>
+                    )}
 
                 </div>
 
