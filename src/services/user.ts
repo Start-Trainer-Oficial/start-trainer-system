@@ -7,16 +7,13 @@ export type CreateUserData = {
 };
 
 export async function registerUser(data: CreateUserData) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }
-  );
+  const response = await fetch(`${process.env.API_URL}/users/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
   if (!response.ok) {
     console.log("Failed to register user", data);
@@ -26,14 +23,11 @@ export async function registerUser(data: CreateUserData) {
 }
 
 export async function loginUser(email: string, password: string) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/users/login`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ identifier: email, password }),
-    }
-  );
+  const response = await fetch(`${process.env.API_URL}/users/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ identifier: email, password }),
+  });
 
   if (!response.ok) {
     const error = await response.json();

@@ -1,13 +1,10 @@
 // Solicitar código de recuperação de senha
 export async function requestPasswordReset(email: string) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/password/request`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    }
-  );
+  const response = await fetch(`${process.env.API_URL}/password/request`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
 
   if (!response.ok) {
     const error = await response.json();
@@ -19,14 +16,11 @@ export async function requestPasswordReset(email: string) {
 
 // Validar código de recuperação
 export async function validateResetCode(email: string, code: string) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/password/validate`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, code }),
-    }
-  );
+  const response = await fetch(`${process.env.API_URL}/password/validate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, code }),
+  });
 
   if (!response.ok) {
     const error = await response.json();
@@ -42,14 +36,11 @@ export async function resetPassword(
   code: string,
   newPassword: string
 ) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/password/reset`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, code, newPassword }),
-    }
-  );
+  const response = await fetch(`${process.env.API_URL}/password/reset`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, code, newPassword }),
+  });
 
   if (!response.ok) {
     const error = await response.json();
@@ -62,7 +53,7 @@ export async function resetPassword(
 // Reenviar código
 export async function resendPasswordResetCode(email: string) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/resend-password-reset-code`,
+    `${process.env.API_URL}/auth/resend-password-reset-code`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -76,6 +76,27 @@ export default function EventComponent() {
 
     const registeredEventIds = new Set(registrations.map((r) => r.event.id));
 
+    useEffect(() => {
+        if (!allEvents || allEvents.length === 0) return;
+
+        const countFor = (option: OptionType) => {
+            if (option === "Beneficentes") return allEvents.filter(e => e.type === "Beneficente").length;
+            return allEvents.filter(e => e.type === option).length;
+        };
+
+        const currentCount = countFor(selectedOption);
+        if (currentCount > 0) return;
+
+        const order: OptionType[] = ["Trilhas", "Corridas", "Beneficentes"];
+        for (const o of order) {
+            const c = countFor(o);
+            if (c > 0) {
+                setSelectedOption(o);
+                break;
+            }
+        }
+    }, [allEvents]);
+
     return (
         <>
             <NavLink
