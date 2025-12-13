@@ -21,6 +21,7 @@ interface EventRegisterModalProps {
         name: string;
         price: number;
         imagekitUrl: string;
+        imageUrl: string;
     };
     isOpen: boolean;
     onClose?: () => void;
@@ -168,14 +169,13 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
                         placeholder="Data de nascimento *"
                         value={
                             /^\d{4}-\d{2}-\d{2}$/.test(form.birthDate)
-                                ? formatDateBR(form.birthDate) // ISO -> DD/MM/YYYY
-                                : formatInputDate(form.birthDate) // enquanto digita
+                                ? formatDateBR(form.birthDate)
+                                : formatInputDate(form.birthDate)
                         }
                         onChange={e => {
                             const digits = e.target.value.replace(/\D/g, "").slice(0, 8);
 
                             if (digits.length === 8) {
-                                // converte para ISO e salva no state
                                 const iso = `${digits.slice(4, 8)}-${digits.slice(2, 4)}-${digits.slice(0, 2)}`;
                                 setForm({ ...form, birthDate: iso });
                             } else {
@@ -252,7 +252,7 @@ export default function EventRegisterModal({ event, isOpen, onClose, onRegistere
                             <option value="" disabled>
                                 Selecione o tamanho *
                             </option>
-                            <option value="Baby look (M)">Baby look (M)</option>
+                            <option value="Baby look M">Baby look (M)</option>
                             <option value="P">P</option>
                             <option value="M">M</option>
                             <option value="G">G</option>

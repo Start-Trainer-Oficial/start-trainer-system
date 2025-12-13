@@ -5,16 +5,16 @@ import { useState, useEffect } from "react";
 const images = [
     {
         url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647042/confira_startfut_j3i1m8.jpg",
-        link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
+        link: "https://www.instagram.com/starttraineroficial/"
     },
-    {
-        url: "/comingSoon/halloween.jpg",
-        link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
-    },
-    {
-        url: "/comingSoon/halloween.jpg",
-        link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
-    },
+    // {
+    //     url: "/comingSoon/halloween.jpg",
+    //     link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
+    // },
+    // {
+    //     url: "/comingSoon/halloween.jpg",
+    //     link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
+    // },
 ];
 
 export default function ComingSoon() {
