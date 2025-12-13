@@ -5,6 +5,8 @@ import { MdCalendarMonth, MdLocationPin, MdPeople, MdCheckCircle } from "react-i
 import { useAuth } from "@/context/authContext";
 import { useLoginModal } from "@/context/loginModalContext";
 
+import { useMemo } from "react";
+
 import AboutEventsModal from "../modals/AboutEventsModal";
 import EventRegisterModal from "../modals/EventRegisterModal";
 
@@ -40,8 +42,11 @@ export default function EventComponent() {
     }, []);
 
     useEffect(() => {
-        if (!email) return;
-        fetchRegistrations();
+        if (!email) {
+            setRegistrations([]);
+        } else {
+            fetchRegistrations();
+        }
     }, [email]);
 
     const fetchRegistrations = async () => {
@@ -74,7 +79,10 @@ export default function EventComponent() {
         return event.type === selectedOption;
     });
 
-    const registeredEventIds = new Set(registrations.map((r) => r.event.id));
+    const registeredEventIds = useMemo(
+        () => new Set(registrations.map((r) => r.event.id)),
+        [registrations]
+    );
 
     useEffect(() => {
         if (!allEvents || allEvents.length === 0) return;
