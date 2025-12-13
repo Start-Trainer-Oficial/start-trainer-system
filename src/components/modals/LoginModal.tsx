@@ -77,7 +77,7 @@ export default function LoginModal() {
 
                 <div className="flex flex-col justify-center items-center w-full h-full">
                     <Image
-                        src="/header/start.png"
+                        src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647072/start_czqyaz.png"
                         alt="Start Trainer Oficial"
                         width={1000}
                         height={300}
