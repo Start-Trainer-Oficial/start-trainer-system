@@ -75,7 +75,7 @@ export default function EventComponent() {
     }
 
     const filteredEvents = allEvents.filter((event) => {
-        if (selectedOption === "Beneficentes") return event.type === "Beneficente";
+        if (selectedOption === "Beneficentes") return event.type === "Beneficentes";
         return event.type === selectedOption;
     });
 
@@ -88,7 +88,7 @@ export default function EventComponent() {
         if (!allEvents || allEvents.length === 0) return;
 
         const countFor = (option: OptionType) => {
-            if (option === "Beneficentes") return allEvents.filter(e => e.type === "Beneficente").length;
+            if (option === "Beneficentes") return allEvents.filter(e => e.type === "Beneficentes").length;
             return allEvents.filter(e => e.type === option).length;
         };
 
@@ -144,7 +144,7 @@ export default function EventComponent() {
                                 className={`absolute right-5 top-5 
     ${event.status === "Disponível"
                                         ? "bg-green-200 border border-green-900/40 text-green-900"
-                                        : event.status === "Em breve"
+                                        : event.status === "Em Breve"
                                             ? "bg-orange-200 border border-orange-900/40 text-orange-900"
                                             : event.status === "Finalizado" || event.status === "Esgotado"
                                                 ? "bg-red-200 border border-red-900/40 text-red-900"
@@ -218,7 +218,7 @@ export default function EventComponent() {
                             <div className="flex gap-2 px-4 items-center justify-center w-full">
                                 {event.type !== "Beneficente" &&
                                     event.status !== "Esgotado" &&
-                                    event.status !== "Em breve" &&
+                                    event.status !== "Em Breve" &&
                                     event.status !== "Finalizado" && (
                                         registeredEventIds.has(event.id) ? (
                                             <button

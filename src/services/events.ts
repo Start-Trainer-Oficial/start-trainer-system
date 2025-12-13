@@ -1,7 +1,7 @@
 export type Event = {
   id: number;
   name: string;
-  status: "Disponível" | "Esgotado" | "Em breve" | "Finalizado";
+  status: "Disponível" | "Esgotado" | "Em Breve" | "Finalizado";
   price: number;
   location: string;
   time: string;
@@ -16,7 +16,7 @@ export type Event = {
 
 export type CreateEventData = {
   name: string;
-  status: "Disponível" | "Esgotado" | "Em breve" | "Finalizado";
+  status: "Disponível" | "Esgotado" | "Em Breve" | "Finalizado";
   price: number;
   location: string;
   time: string;
