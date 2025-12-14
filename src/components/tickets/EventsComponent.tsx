@@ -156,7 +156,7 @@ export default function EventComponent() {
                             </div>
 
                             <Image
-                                src={event.imageUrl}
+                                src={event.imageUrl || "fallback.jpg"}
                                 alt={event.name}
                                 width={390}
                                 height={240}

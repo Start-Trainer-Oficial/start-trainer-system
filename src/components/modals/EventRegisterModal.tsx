@@ -226,7 +226,7 @@ export default function EventRegisterModal({
                     </div>
 
                     <Image
-                        src={event.imagekitUrl}
+                        src={event.imagekitUrl || "fallback.jpg"}
                         alt="Tabela de tamanhos de camisetas"
                         width={400}
                         height={150}
