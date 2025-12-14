@@ -58,10 +58,10 @@ export default function AboutEventsModal({ open, onClose, event }: AboutEventsMo
                     <MdClose size={22} />
                 </button>
 
-                <h1 className="text-2xl font-semibold text-[#5f2daf]">{event?.name}</h1>
-                <h1 className="text-lg font-semibold text-black mb-6">{event?.title}</h1>
+                <h1 className="text-2xl text-center font-semibold text-[#5f2daf]">{event?.name}</h1>
+                <h1 className="text-lg font-semibold text-center text-black mb-6">{event?.title}</h1>
 
-                <div className="text-gray-700 whitespace-pre-line text-start px-4 mt-2">{event?.about}</div>
+                <div className="text-gray-700  whitespace-pre-line text-start px-4 mt-2">{event?.about}</div>
 
             </div>
         </div>

@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { MdCalendarMonth, MdLocationPin, MdPeople, MdCheckCircle } from "react-icons/md";
 import { useAuth } from "@/context/authContext";
 import { useLoginModal } from "@/context/loginModalContext";
-
-import { useMemo } from "react";
 
 import AboutEventsModal from "../modals/AboutEventsModal";
 import EventRegisterModal from "../modals/EventRegisterModal";
@@ -19,11 +17,10 @@ import { formatDateBR } from "@/utils/formatDate";
 export default function EventComponent() {
     const { user, email } = useAuth();
     const { openModal } = useLoginModal();
-    const [openAboutModal, setOpenAboutModal] = useState(false);
 
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-
-    const [isOpen, setIsOpen] = useState(false);
+    const [isAboutOpen, setIsAboutOpen] = useState(false);
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
     const [allEvents, setAllEvents] = useState<Event[]>([]);
     const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
@@ -33,16 +30,17 @@ export default function EventComponent() {
     type OptionType = "Trilhas" | "Corridas" | "Beneficentes";
     const options = ["Trilhas", "Corridas", "Beneficentes"] as const;
     const labels = ["Trilhas", "Corridas", "Beneficentes"];
-
     const [selectedOption, setSelectedOption] = useState<OptionType>("Trilhas");
 
+    // Fetch all events
     useEffect(() => {
         getEvents()
             .then((data) => setAllEvents(data))
-            .catch((error) => console.error(error))
+            .catch(console.error)
             .finally(() => setLoading(false));
     }, []);
 
+    // Fetch user registrations
     useEffect(() => {
         if (!email) {
             setRegistrations([]);
@@ -64,44 +62,40 @@ export default function EventComponent() {
         }
     };
 
-    const handleRedirect = (event: Event) => {
-        if (!user) {
-            openModal();
-        } else {
-            setSelectedEvent(event);
-            setIsOpen(true);
-        }
+    // Handlers
+    const handleRegisterClick = (event: Event) => {
+        if (!user) return openModal();
+        setSelectedEvent(event);
+        setIsRegisterOpen(true);
     };
 
-    const handleOpenAboutModal = () => {
-        setOpenAboutModal(true);
-    }
+    const handleAboutClick = (event: Event) => {
+        setSelectedEvent(event);
+        setIsAboutOpen(true);
+    };
 
-    const filteredEvents = allEvents.filter((event) => {
-        if (selectedOption === "Beneficentes") return event.type === "Beneficentes";
-        return event.type === selectedOption;
-    });
+    // Filter events by selected category
+    const filteredEvents = allEvents.filter((event) =>
+        selectedOption === "Beneficentes" ? event.type === "Beneficentes" : event.type === selectedOption
+    );
 
     const registeredEventIds = useMemo(
         () => new Set(registrations.map((r) => r.event.id)),
         [registrations]
     );
 
+    // Automatically select category if no events in current category
     useEffect(() => {
         if (!allEvents || allEvents.length === 0) return;
 
-        const countFor = (option: OptionType) => {
-            if (option === "Beneficentes") return allEvents.filter(e => e.type === "Beneficentes").length;
-            return allEvents.filter(e => e.type === option).length;
-        };
+        const countFor = (option: OptionType) =>
+            allEvents.filter(e => e.type === option || (option === "Beneficentes" && e.type === "Beneficentes")).length;
 
-        const currentCount = countFor(selectedOption);
-        if (currentCount > 0) return;
+        if (countFor(selectedOption) > 0) return;
 
         const order: OptionType[] = ["Trilhas", "Corridas", "Beneficentes"];
         for (const o of order) {
-            const c = countFor(o);
-            if (c > 0) {
+            if (countFor(o) > 0) {
                 setSelectedOption(o);
                 break;
             }
@@ -114,7 +108,7 @@ export default function EventComponent() {
                 labels={labels}
                 options={options}
                 selectedOption={selectedOption}
-                onSelect={(option) => setSelectedOption(option)}
+                onSelect={setSelectedOption}
             />
 
             <div className="flex flex-wrap justify-center gap-10 mt-4">
@@ -145,7 +139,7 @@ export default function EventComponent() {
                         <div className="relative">
                             <div
                                 className={`absolute right-5 top-5 
-    ${event.status === "Disponível"
+                                ${event.status === "Disponível"
                                         ? "bg-green-200 border border-green-900/40 text-green-900"
                                         : event.status === "Em Breve"
                                             ? "bg-orange-200 border border-orange-900/40 text-orange-900"
@@ -153,7 +147,7 @@ export default function EventComponent() {
                                                 ? "bg-red-200 border border-red-900/40 text-red-900"
                                                 : ""
                                     }
-    px-3 py-1 rounded-lg text-sm font-medium`}
+                                px-3 py-1 rounded-lg text-sm font-medium`}
                             >
                                 <span>{event.status}</span>
                             </div>
@@ -223,44 +217,55 @@ export default function EventComponent() {
                                 {event.type !== "Beneficente" &&
                                     event.status !== "Esgotado" &&
                                     event.status !== "Em Breve" &&
-                                    event.status !== "Finalizado" && (
-                                        registeredEventIds.has(event.id) ? (
-                                            <button
-                                                disabled
-                                                aria-disabled
-                                                className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-gray-400 flex items-center justify-center"
-                                            >
-                                                <MdCheckCircle className="mr-2 text-white" size={18} />
-                                                Já inscrito
-                                            </button>
-                                        ) : (
-                                            <button
-                                                onClick={() => handleRedirect(event)}
-                                                className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-[#381877] transition-all cursor-pointer duration-300 hover:brightness-90"
-                                            >
-                                                Fazer inscrição
-                                            </button>
-                                        )
-                                    )}
-
+                                    event.status !== "Finalizado" &&
+                                    (registeredEventIds.has(event.id) ? (
+                                        <button
+                                            disabled
+                                            className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-gray-400 flex items-center justify-center"
+                                        >
+                                            <MdCheckCircle className="mr-2 text-white" size={18} />
+                                            Já inscrito
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => handleRegisterClick(event)}
+                                            className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-[#381877] transition-all cursor-pointer duration-300 hover:brightness-90"
+                                        >
+                                            Fazer inscrição
+                                        </button>
+                                    ))}
 
                                 <button
-                                    onClick={event.type === "Beneficente" ? () => handleRedirect(event) : () => handleOpenAboutModal()}
-                                    className="w-full mt-5 mb-6 py-2 rounded-lg text-purple-800 border border-purple-800/20 
-                                               font-semibold bg-white cursor-pointer hover:bg-[#61ffc2] hover:text-black transition"
+                                    onClick={() =>
+                                        event.type === "Beneficente"
+                                            ? handleRegisterClick(event)
+                                            : handleAboutClick(event)
+                                    }
+                                    className="w-full mt-5 mb-6 py-2 rounded-lg text-purple-800 border border-purple-800/20 font-semibold bg-white cursor-pointer hover:bg-[#61ffc2] hover:text-black transition"
                                 >
                                     {event.type === "Beneficente" ? "Contribua" : "Sobre"}
                                 </button>
                             </div>
                         </div>
-
-                        <AboutEventsModal open={openAboutModal} event={event} onClose={() => setOpenAboutModal(false)} />
-
-                        <EventRegisterModal event={selectedEvent!} isOpen={isOpen} onClose={() => setIsOpen(false)} onRegistered={fetchRegistrations} />
-
                     </div>
                 ))}
             </div>
+
+            {selectedEvent && (
+                <>
+                    <AboutEventsModal
+                        open={isAboutOpen}
+                        event={selectedEvent}
+                        onClose={() => setIsAboutOpen(false)}
+                    />
+                    <EventRegisterModal
+                        isOpen={isRegisterOpen}
+                        event={selectedEvent}
+                        onClose={() => setIsRegisterOpen(false)}
+                        onRegistered={fetchRegistrations}
+                    />
+                </>
+            )}
         </>
     );
 }
