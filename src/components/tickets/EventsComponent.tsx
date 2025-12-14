@@ -156,11 +156,12 @@ export default function EventComponent() {
                             </div>
 
                             <Image
-                                src={event.imageUrl || "fallback.jpg"}
+                                src={event.imageUrl || "/fallback.jpg"}
                                 alt={event.name}
                                 width={390}
                                 height={240}
-                                className="rounded-t-2xl"
+                                quality={100}
+                                className="rounded-t-2xl max-h-48 w-full object-cover"
                             />
                         </div>
 

@@ -20,8 +20,12 @@ export default function PaymentSuccessOverlay() {
 
     return (
         <>
-            <HomePage />
-            {showModal && <PaymentSuccess />}
+            {showModal && (
+                <>
+                    <HomePage />
+                    <PaymentSuccess />
+                </>
+            )}
         </>
     );
 }

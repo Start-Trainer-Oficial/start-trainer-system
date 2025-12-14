@@ -90,9 +90,10 @@ export default function EventRegisterModal({
             currency: "BRL",
         }).format(value);
 
-    const price = Number(event?.price ?? 0);
-    const serviceFee = price * 0.1;
-    const total = price + serviceFee;
+    const priceWithFee = Number(event?.price ?? 0); // 143
+    const feePercentage = 0.1;
+    const basePrice = priceWithFee / (1 + feePercentage);
+    const includedFee = priceWithFee - basePrice;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -148,9 +149,9 @@ export default function EventRegisterModal({
                 </p>
 
                 <p className="text-sm text-black text-center mt-2 bg-gray-100 px-4 py-2 rounded-md w-[90%]">
-                    <span className="font-bold">Valor:</span> {formatCurrency(price)} +{" "}
-                    <span className="font-bold">Taxa de serviço:</span> {formatCurrency(serviceFee)} -{" "}
-                    <span className="font-bold text-[#5f2daf]">Total:</span> {formatCurrency(total)}
+                    <span className="font-bold">Valor:</span> {formatCurrency(basePrice)} +{" "}
+                    <span className="font-bold">Taxa de serviço:</span> {formatCurrency(includedFee)} -{" "}
+                    <span className="font-bold text-[#5f2daf]">Total:</span> {formatCurrency(priceWithFee)}
                 </p>
 
                 <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-3 mt-4">
@@ -226,10 +227,11 @@ export default function EventRegisterModal({
                     </div>
 
                     <Image
-                        src={event.imagekitUrl || "fallback.jpg"}
+                        src={event.imagekitUrl || "/fallback.jpg"}
                         alt="Tabela de tamanhos de camisetas"
                         width={400}
                         height={150}
+                        quality={100}
                         className="mb-2 w-full max-w-[90%] rounded-md object-contain"
                     />
                     <Image
