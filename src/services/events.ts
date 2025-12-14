@@ -46,6 +46,10 @@ export type CreateEventRegistrationData = {
   shirtSize: string;
 };
 
+export type CheckoutResponse = {
+  init_point: string;
+};
+
 const API_URL = process.env.API_URL;
 
 export async function getEvents(): Promise<Event[]> {
@@ -65,24 +69,44 @@ export async function createEvent(data: CreateEventData): Promise<Event> {
   return res.json();
 }
 
-// Inscrição em evento
-export async function registerInEvent(
+// Inscrição em evento (mercado pago checkout)
+export async function createCheckout(
   eventId: number,
-  data: CreateEventRegistrationData
-): Promise<{ message: string; registrationId: number }> {
-  const res = await fetch(`${API_URL}/events/${eventId}/registrations`, {
+  payload: any
+): Promise<CheckoutResponse> {
+  const response = await fetch(`/events/${eventId}/checkout`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Erro ao registrar no evento");
+  if (!response.ok) {
+    throw new Error("Erro ao criar checkout");
   }
 
-  return res.json();
+  const data: CheckoutResponse = await response.json();
+  return data;
 }
+
+// export async function registerInEvent(
+//   eventId: number,
+//   data: CreateEventRegistrationData
+// ): Promise<{ message: string; registrationId: number }> {
+//   const res = await fetch(`${API_URL}/events/${eventId}/registrations`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(data),
+//   });
+
+//   if (!res.ok) {
+//     const err = await res.json();
+//     throw new Error(err.message || "Erro ao registrar no evento");
+//   }
+
+//   return res.json();
+// }
 
 // Buscar eventos de um usuário
 export async function getMyEvents(email: string): Promise<EventRegistration[]> {
