@@ -21,6 +21,8 @@ export default function EventComponent() {
     const { openModal } = useLoginModal();
     const [openAboutModal, setOpenAboutModal] = useState(false);
 
+    const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
     const [isOpen, setIsOpen] = useState(false);
 
     const [allEvents, setAllEvents] = useState<Event[]>([]);
@@ -62,10 +64,11 @@ export default function EventComponent() {
         }
     };
 
-    const handleRedirect = () => {
+    const handleRedirect = (event: Event) => {
         if (!user) {
             openModal();
         } else {
+            setSelectedEvent(event);
             setIsOpen(true);
         }
     };
@@ -232,7 +235,7 @@ export default function EventComponent() {
                                             </button>
                                         ) : (
                                             <button
-                                                onClick={() => handleRedirect()}
+                                                onClick={() => handleRedirect(event)}
                                                 className="w-full mt-5 mb-6 py-2 rounded-lg text-white font-semibold bg-[#381877] transition-all cursor-pointer duration-300 hover:brightness-90"
                                             >
                                                 Fazer inscrição
@@ -242,7 +245,7 @@ export default function EventComponent() {
 
 
                                 <button
-                                    onClick={event.type === "Beneficente" ? () => handleRedirect() : () => handleOpenAboutModal()}
+                                    onClick={event.type === "Beneficente" ? () => handleRedirect(event) : () => handleOpenAboutModal()}
                                     className="w-full mt-5 mb-6 py-2 rounded-lg text-purple-800 border border-purple-800/20 
                                                font-semibold bg-white cursor-pointer hover:bg-[#61ffc2] hover:text-black transition"
                                 >
@@ -253,7 +256,7 @@ export default function EventComponent() {
 
                         <AboutEventsModal open={openAboutModal} event={event} onClose={() => setOpenAboutModal(false)} />
 
-                        <EventRegisterModal event={event} isOpen={isOpen} onClose={() => setIsOpen(false)} onRegistered={fetchRegistrations} />
+                        <EventRegisterModal event={selectedEvent!} isOpen={isOpen} onClose={() => setIsOpen(false)} onRegistered={fetchRegistrations} />
 
                     </div>
                 ))}
