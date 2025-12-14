@@ -74,7 +74,7 @@ export async function createCheckout(
   eventId: number,
   payload: any
 ): Promise<CheckoutResponse> {
-  const response = await fetch(`/events/${eventId}/checkout`, {
+  const response = await fetch(`${API_URL}/events/${eventId}/checkout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
