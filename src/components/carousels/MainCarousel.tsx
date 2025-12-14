@@ -45,7 +45,7 @@ export default function Carousel() {
 
     return (
         <>
-            <div className="relative w-[360px] h-[200px] lg:w-[1200px] lg:h-[520px] mx-auto mt-20 shadow-xl">
+            <div className="relative w-[340px] h-[200px] lg:w-[1200px] lg:h-[520px] mx-auto mt-20 shadow-xl">
                 <a
                     href={images[current].link}
                     onClick={handleAnchorClick}

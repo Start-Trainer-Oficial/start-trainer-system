@@ -8,6 +8,9 @@ interface AboutEventsModalProps {
         name: string;
         about: string;
         title: string;
+        type: string;
+        urlLinkAbout: string;
+
     };
 }
 
@@ -45,7 +48,7 @@ export default function AboutEventsModal({ open, onClose, event }: AboutEventsMo
             <div
                 className="
                     relative bg-white 
-                    max-w-[414px] h-screen md:max-w-[600px] md:h-[700px] 
+                    max-w-[414px] h-screen md:max-w-[600px] md:h-[760px] 
                     w-full h-auto
                     rounded-xl shadow-xl px-7 py-10
                     overflow-y-auto thin-grey-scrollbar
@@ -62,6 +65,14 @@ export default function AboutEventsModal({ open, onClose, event }: AboutEventsMo
                 <h1 className="text-lg font-semibold text-center text-black mb-6">{event?.title}</h1>
 
                 <div className="text-gray-700  whitespace-pre-line text-start px-4 mt-2">{event?.about}</div>
+
+                {event?.type === "Beneficentes" && event?.urlLinkAbout && (
+                    <div className="mt-6 px-4 text-center">
+                        <a target="_blank" href={event.urlLinkAbout} className="cursor-pointer py-2 px-4 rounded-lg bg-[#5f2daf] inline-block text-white transition-colors">
+                            <span className="text-sm">Saiba como ajudar aqui!</span>
+                        </a>
+                    </div>
+                )}
 
             </div>
         </div>

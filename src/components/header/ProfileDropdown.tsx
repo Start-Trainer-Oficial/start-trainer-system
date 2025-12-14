@@ -36,10 +36,10 @@ export default function ProfileDropdown({ user, menuItems }: ProfileDropdownProp
           <img
             src={user.avatarUrl}
             alt="Avatar"
-            className="w-7 h-7 rounded-full object-cover "
+            className="w-6 h-6 rounded-full object-cover "
           />
         )}
-        <p className="font-semibold text-gray-800">Olá, {user.name.split(" ")[0]}!</p>
+        <p className="font-semibold text-gray-800 text-sm">Olá, {user.name.split(" ")[0]}!</p>
       </div>
 
       <div

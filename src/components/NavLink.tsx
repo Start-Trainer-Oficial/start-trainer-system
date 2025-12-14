@@ -11,7 +11,7 @@ type NavLinkProps = {
 
 export default function NavLink({ labels, options, selectedOption, onSelect }: NavLinkProps) {
     return (
-        <div className="flex items-center justify-center rounded-sm bg-gray-700/8 mt-4">
+        <div className="flex items-center w-[330px] md:w-[480px] justify-center rounded-sm bg-gray-700/8 mt-4 text-sm">
             {options.map((option, index) => (
                 <button
                     key={option}

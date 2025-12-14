@@ -11,7 +11,7 @@ export default function Footer() {
                 </div>
 
                 <div className="flex flex-col  lg:self-center">
-                    <div className="flex justify-center gap-4">
+                    <div className="flex justify-center gap-2 px-4">
                         <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647062/logoTrekking_bvrjd5.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
                         <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647062/logoRunners_pzttxv.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />
                         <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647062/logoInstituto_zeh16p.png" alt="Logo" width={600} height={400} className="object-contain w-[120px]" />

@@ -30,7 +30,7 @@ export default function ComingSoon() {
 
     return (
         <>
-            <div className="relative w-[360px] h-[200px] lg:w-[1200px] lg:h-[520px] mx-auto mt-5">
+            <div className="relative w-[340px] h-[200px] lg:w-[1200px] lg:h-[520px] mx-auto mt-5">
                 <a
                     href={images[current].link}
                     target="_blank"

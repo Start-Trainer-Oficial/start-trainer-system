@@ -32,7 +32,7 @@ export default function EventComponent() {
     const labels = ["Trilhas", "Corridas", "Beneficentes"];
     const [selectedOption, setSelectedOption] = useState<OptionType>("Trilhas");
 
-    // Fetch all events
+
     useEffect(() => {
         getEvents()
             .then((data) => setAllEvents(data))
@@ -40,7 +40,6 @@ export default function EventComponent() {
             .finally(() => setLoading(false));
     }, []);
 
-    // Fetch user registrations
     useEffect(() => {
         if (!email) {
             setRegistrations([]);
@@ -62,7 +61,6 @@ export default function EventComponent() {
         }
     };
 
-    // Handlers
     const handleRegisterClick = (event: Event) => {
         if (!user) return openModal();
         setSelectedEvent(event);
@@ -74,7 +72,6 @@ export default function EventComponent() {
         setIsAboutOpen(true);
     };
 
-    // Filter events by selected category
     const filteredEvents = allEvents.filter((event) =>
         selectedOption === "Beneficentes" ? event.type === "Beneficentes" : event.type === selectedOption
     );
@@ -84,7 +81,6 @@ export default function EventComponent() {
         [registrations]
     );
 
-    // Automatically select category if no events in current category
     useEffect(() => {
         if (!allEvents || allEvents.length === 0) return;
 
@@ -111,7 +107,7 @@ export default function EventComponent() {
                 onSelect={setSelectedOption}
             />
 
-            <div className="flex flex-wrap justify-center gap-10 mt-4">
+            <div className="flex flex-wrap justify-center gap-5 mt-4">
                 {loading && (
                     <div className="w-full flex justify-center items-center py-20">
                         <p className="text-gray-500 text-lg">Carregando eventos...</p>
@@ -135,7 +131,7 @@ export default function EventComponent() {
                 )}
 
                 {filteredEvents.map((event) => (
-                    <div key={event.id} className="mt-10 w-[360px] border border-gray-700/15 rounded-2xl text-center">
+                    <div key={event.id} className="mt-5 w-[330px] border border-gray-700/15 rounded-2xl text-center">
                         <div className="relative">
                             <div
                                 className={`absolute right-5 top-5 
@@ -176,7 +172,7 @@ export default function EventComponent() {
 
                                     {event.type === "Beneficente" ? (
                                         <>
-                                            <div className="flex px-6 mt-3">
+                                            <div className="flex px-6 mt-3 ">
                                                 <MdLocationPin className="inline-block text-[#5f2daf]" size={20} />
                                                 <span className="text-sm text-gray-500 ml-1">{event.location}</span>
                                             </div>
@@ -186,7 +182,7 @@ export default function EventComponent() {
                                         </>
                                     ) : (
                                         <>
-                                            <div className="flex px-6 mt-3 max-w-[260px]">
+                                            <div className="flex px-6 mt-3 max-w-[230px]">
                                                 <span className="text-sm text-gray-500 ml-1">{event.title}</span>
                                             </div>
                                             <div className="flex px-6 mt-3">
@@ -196,7 +192,7 @@ export default function EventComponent() {
                                         </>
                                     )}
 
-                                    {event.slots > 0 && (
+                                    {event.slots > 0 && event.type !== "Beneficentes" && (
                                         <div className="flex px-6 mt-3">
                                             <MdPeople className="inline-block text-[#5f2daf]" size={19} />
                                             <span className="text-sm text-gray-500 ml-1">{event.slots}</span>
@@ -214,7 +210,7 @@ export default function EventComponent() {
                             <div className="w-[93%] self-center border-b-[0.5px] border-gray-700/15 px-2 mt-5" />
 
                             <div className="flex gap-2 px-4 items-center justify-center w-full">
-                                {event.type !== "Beneficente" &&
+                                {event.type !== "Beneficentes" &&
                                     event.status !== "Esgotado" &&
                                     event.status !== "Em Breve" &&
                                     event.status !== "Finalizado" &&
