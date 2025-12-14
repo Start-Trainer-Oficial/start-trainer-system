@@ -130,10 +130,10 @@ export default function EventRegisterModal({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
             style={{ backdropFilter: "blur(3px)" }}
         >
-            <div className="w-full max-w-[414px] md:max-w-[600px] h-auto max-h-screen bg-white rounded-xl shadow-xl flex flex-col items-center relative p-6 overflow-y-auto thin-grey-scrollbar">
+            <div className="w-full max-w-[414px] md:max-w-[600px] max-h-screen bg-white rounded-xl shadow-xl flex flex-col items-center relative p-6 overflow-y-auto thin-grey-scrollbar">
                 <button
                     onClick={handleClose}
                     className="absolute right-6 top-6 w-6 h-6 cursor-pointer"

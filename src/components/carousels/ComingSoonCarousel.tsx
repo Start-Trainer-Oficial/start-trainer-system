@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 const images = [
     {
-        url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647042/confira_startfut_j3i1m8.jpg",
+        url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765646967/confira_startfut_vkxsfx.jpg",
         link: "https://www.instagram.com/starttraineroficial/"
     },
     // {

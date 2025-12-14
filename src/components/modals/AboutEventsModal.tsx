@@ -48,7 +48,7 @@ export default function AboutEventsModal({ open, onClose, event }: AboutEventsMo
             <div
                 className="
                     relative bg-white 
-                    max-w-[414px] h-screen md:max-w-[600px] md:h-[760px] 
+                    max-w-[414px] h-screen py-10 md:max-w-[600px] h-[760px] 
                     w-full h-auto
                     rounded-xl shadow-xl px-7 py-10
                     overflow-y-auto thin-grey-scrollbar
