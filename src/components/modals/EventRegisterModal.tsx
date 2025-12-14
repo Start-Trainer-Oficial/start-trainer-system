@@ -23,12 +23,14 @@ interface EventRegisterModalProps {
     };
     isOpen: boolean;
     onClose?: () => void;
+    onRegistered?: () => Promise<void> | void;
 }
 
 export default function EventRegisterModal({
     event,
     isOpen,
     onClose,
+    onRegistered,
 }: EventRegisterModalProps) {
     const { email } = useAuth();
 
@@ -76,7 +78,7 @@ export default function EventRegisterModal({
 
         if (started) {
             setShowPaymentModal(true);
-            localStorage.removeItem("checkout_started"); // 👈 remove aqui
+            localStorage.removeItem("checkout_started");
         }
     }, []);
 
@@ -101,7 +103,7 @@ export default function EventRegisterModal({
             };
 
             const res = await createCheckout(event.id, payload);
-
+            onRegistered?.();
             localStorage.setItem("checkout_started", "true");
 
             window.location.href = res.init_point;
