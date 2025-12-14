@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 import HomePage from "@/app/page";
-import PaymentSuccess from "@/app/payment/sucess/page";
+import PaymentSuccess from "@/app/payment/success/page";
 
 export default function PaymentSuccessOverlay() {
     const pathname = usePathname();
