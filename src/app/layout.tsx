@@ -19,6 +19,8 @@ import ResetCodeModal from "@/components/modals/password/ResetCodeMailModal";
 import { ChangePasswordModalProvider } from "@/context/password/changePasswordModalContext";
 import ChangePasswordModal from "@/components/modals/password/ChangePassword";
 
+import PaymentSuccessModalHandler from "@/components/PaymentSuccessModalHandler";
+
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -49,6 +51,7 @@ export default function RootLayout({
                   <ChangePasswordModalProvider>
                     <Header />
                     {children}
+                    <PaymentSuccessModalHandler />
                     <Toaster position="top-center" />
                     <Footer />
                     <LoginModal />
