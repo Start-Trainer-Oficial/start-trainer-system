@@ -10,14 +10,18 @@ interface AboutEventsModalProps {
         title: string;
         type: string;
         urlLinkAbout: string;
-
     };
 }
 
-export default function AboutEventsModal({ open, onClose, event }: AboutEventsModalProps) {
-
+export default function AboutEventsModal({
+    open,
+    onClose,
+    event,
+}: AboutEventsModalProps) {
     useEffect(() => {
-        const root = document.getElementById("__next") || document.getElementById("root");
+        const root =
+            document.getElementById("__next") ||
+            document.getElementById("root");
 
         if (open) {
             document.body.style.overflow = "hidden";
@@ -38,42 +42,60 @@ export default function AboutEventsModal({ open, onClose, event }: AboutEventsMo
 
     if (!open) return null;
 
-    const handleClose = () => onClose && onClose();
+    const handleClose = () => {
+        if (onClose) onClose();
+    };
 
     return (
-        <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-            style={{ backdropFilter: "blur(3px)" }}
-        >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
             <div
                 className="
-                    relative bg-white 
-                    max-w-[414px] h-screen py-10 md:max-w-[600px] h-[760px] 
-                    w-full h-auto
-                    rounded-xl shadow-xl px-7 py-10
-                    overflow-y-auto thin-grey-scrollbar
-                "
+          relative bg-white
+          w-full max-w-[414px] md:max-w-[600px]
+          max-h-[90dvh]
+          rounded-xl shadow-xl
+          px-7 py-6
+          overflow-y-auto thin-grey-scrollbar
+        "
             >
+
                 <button
                     onClick={handleClose}
-                    className="absolute right-4 top-4 text-[#5f2daf] cursor-pointer"
+                    className="sticky top-0 ml-auto block text-[#5f2daf] z-50 bg-white"
+                    aria-label="Fechar"
                 >
                     <MdClose size={22} />
                 </button>
 
-                <h1 className="text-2xl text-center font-semibold text-[#5f2daf]">{event?.name}</h1>
-                <h1 className="text-lg font-semibold text-center text-black mb-6">{event?.title}</h1>
+                <h1 className="text-2xl text-center font-semibold text-[#5f2daf] mt-2">
+                    {event?.name}
+                </h1>
 
-                <div className="text-gray-700  whitespace-pre-line text-start px-4 mt-2">{event?.about}</div>
+                <h2 className="text-lg font-semibold text-center text-black mb-6">
+                    {event?.title}
+                </h2>
+
+                <div className="text-gray-700 whitespace-pre-line text-start px-2">
+                    {event?.about}
+                </div>
 
                 {event?.type === "Beneficentes" && event?.urlLinkAbout && (
-                    <div className="mt-6 px-4 text-center">
-                        <a target="_blank" href={event.urlLinkAbout} className="cursor-pointer py-2 px-4 rounded-lg bg-[#5f2daf] inline-block text-white transition-colors">
-                            <span className="text-sm">Saiba como ajudar aqui!</span>
+                    <div className="mt-6 text-center">
+                        <a
+                            href={event.urlLinkAbout}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="
+                inline-block px-5 py-2
+                rounded-lg bg-[#5f2daf]
+                text-white text-sm
+                transition-colors hover:opacity-90
+              "
+                        >
+                            Saiba como ajudar aqui!
                         </a>
                     </div>
                 )}
-
             </div>
         </div>
     );
