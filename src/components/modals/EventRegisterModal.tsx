@@ -30,7 +30,6 @@ export default function EventRegisterModal({
     onRegistered,
 }: EventRegisterModalProps) {
     const { email } = useAuth();
-
     const [loading, setLoading] = useState(false);
 
     const [form, setForm] = useState({
@@ -50,13 +49,15 @@ export default function EventRegisterModal({
     useEffect(() => {
         if (!isOpen) return;
 
-        const root = document.getElementById("__next");
+        const root =
+            document.getElementById("__next") ||
+            document.getElementById("root");
+
         const elements = [document.body, document.documentElement, root];
 
         elements.forEach((el) => {
             if (el) {
                 el.style.overflow = "hidden";
-                el.style.height = "100%";
             }
         });
 
@@ -64,7 +65,6 @@ export default function EventRegisterModal({
             elements.forEach((el) => {
                 if (el) {
                     el.style.overflow = "auto";
-                    el.style.height = "auto";
                 }
             });
         };
@@ -90,7 +90,7 @@ export default function EventRegisterModal({
             currency: "BRL",
         }).format(value);
 
-    const priceWithFee = Number(event?.price ?? 0); // 143
+    const priceWithFee = Number(event?.price ?? 0);
     const feePercentage = 0.1;
     const basePrice = priceWithFee / (1 + feePercentage);
     const includedFee = priceWithFee - basePrice;
@@ -100,25 +100,17 @@ export default function EventRegisterModal({
         setLoading(true);
 
         try {
-            const isISO = /^\d{4}-\d{2}-\d{2}$/.test(form.birthDate);
             const digits = onlyDigits(form.birthDate);
-
             const toISO = (d: string) =>
                 `${d.slice(4, 8)}-${d.slice(2, 4)}-${d.slice(0, 2)}`;
 
             const payload = {
                 ...form,
-                birthDate: isISO
-                    ? form.birthDate
-                    : digits.length === 8
-                        ? toISO(digits)
-                        : form.birthDate,
+                birthDate: digits.length === 8 ? toISO(digits) : form.birthDate,
             };
 
             const res = await createCheckout(event.id, payload);
             onRegistered?.();
-
-            // Redireciona diretamente para o Mercado Pago
             window.location.href = res.init_point;
         } catch (error: any) {
             toast.error(error?.message || "Erro ao iniciar pagamento");
@@ -129,32 +121,46 @@ export default function EventRegisterModal({
     const handleClose = () => onClose?.();
 
     return (
-        <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-            style={{ backdropFilter: "blur(3px)" }}
-        >
-            <div className="w-full max-w-[414px] md:max-w-[600px] max-h-screen bg-white rounded-xl shadow-xl flex flex-col items-center relative p-6 overflow-y-auto thin-grey-scrollbar">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+            <div
+                className="
+          relative bg-white
+          w-full max-w-[414px] md:max-w-[600px]
+          max-h-[90dvh]
+          rounded-xl shadow-xl
+          px-6 py-5
+          overflow-y-auto thin-grey-scrollbar
+        "
+            >
+                {/* Close nunca some */}
                 <button
                     onClick={handleClose}
-                    className="absolute right-6 top-6 w-6 h-6 cursor-pointer"
+                    className="sticky top-0 ml-auto block text-[#5f2daf] z-50 bg-white"
+                    aria-label="Fechar"
                 >
-                    <MdClose size={20} className="text-[#5f2daf]" />
+                    <MdClose size={20} />
                 </button>
 
-                <h1 className="text-lg font-bold text-purple-700 mt-4 text-center">
+                <h1 className="text-lg font-bold text-purple-700 text-center mt-2">
                     Inscrição - {event.name}
                 </h1>
+
                 <p className="text-xs text-black/60 text-center">
                     Preencha os campos obrigatórios para completar sua inscrição.
                 </p>
 
-                <p className="text-sm text-black text-center mt-2 bg-gray-100 px-4 py-2 rounded-md w-[90%]">
+                <p className="text-sm text-black text-center mt-3 bg-gray-100 px-4 py-2 rounded-md">
                     <span className="font-bold">Valor:</span> {formatCurrency(basePrice)} +{" "}
-                    <span className="font-bold">Taxa de serviço:</span> {formatCurrency(includedFee)} -{" "}
-                    <span className="font-bold text-[#5f2daf]">Total:</span> {formatCurrency(priceWithFee)}
+                    <span className="font-bold">Taxa:</span> {formatCurrency(includedFee)} —{" "}
+                    <span className="font-bold text-[#5f2daf]">
+                        Total: {formatCurrency(priceWithFee)}
+                    </span>
                 </p>
 
-                <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-3 mt-4">
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col items-center gap-3 mt-4"
+                >
                     <input
                         type="text"
                         placeholder="Nome completo *"
