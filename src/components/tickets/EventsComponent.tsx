@@ -161,7 +161,7 @@ export default function EventComponent() {
                         <div className="flex relative flex-col">
                             <div className="flex">
                                 <div className="items-start text-start">
-                                    <h1 className="font-bold mt-5 text-start px-6 text-lg uppercase">{event.name}</h1>
+                                    <h1 className="font-bold mt-5 text-start px-6 text-md uppercase">{event.name}</h1>
 
                                     {event.type !== "Beneficente" && (
                                         <div className="flex px-6 mt-4">
