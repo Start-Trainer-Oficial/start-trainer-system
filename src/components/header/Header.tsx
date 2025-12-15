@@ -34,7 +34,7 @@ export default function Header() {
         className="w-full max-w-[150px] h-auto object-contain lg:ml-12"
       />
 
-      <span className="font-semibold select-none hidden lg:flex">O movimento que conecta.</span>
+      <span className="font-semibold select-none hidden lg:flex">Criado em movimento.</span>
 
       {!user ? (
         <div className="flex gap-4">

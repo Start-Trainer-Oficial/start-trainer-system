@@ -8,13 +8,13 @@ const images = [
         link: "https://www.instagram.com/starttraineroficial/"
     },
     // {
-    //     url: "/comingSoon/halloween.jpg",
-    //     link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
+    //     url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647037/capa1_ub94gy.jpg",
+    //     link: "https://www.instagram.com/starttraineroficial/"
     // },
     // {
-    //     url: "/comingSoon/halloween.jpg",
-    //     link: "https://docs.google.com/forms/d/e/1FAIpQLScQb5t5QL33R3A9mY4mcSh38FQ1kwi2-ECOB7vzblbC9XeWWg/viewform"
-    // },
+    //     url: "https://res.cloudinary.com/dytw21kw2/image/upload/v1765647033/capa2_crnl5w.jpg",
+    //     link: "#agenda"
+    // }
 ];
 
 export default function ComingSoon() {
@@ -30,7 +30,7 @@ export default function ComingSoon() {
 
     return (
         <>
-            <div className="relative w-[340px] h-[200px] lg:w-[1200px] lg:h-[520px] mx-auto mt-5">
+            <div className="relative w-[350px] h-[152px] lg:w-[1200px] lg:h-[520px] mx-auto mt-5">
                 <a
                     href={images[current].link}
                     target="_blank"
@@ -38,7 +38,7 @@ export default function ComingSoon() {
                     className="block w-full h-full rounded-xl bg-black shadow-lg cursor-pointer hover:brightness-95 transition-transform duration-200"
                     style={{
                         backgroundImage: `url(${images[current].url})`,
-                        backgroundSize: 'cover',
+                        backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center'
                     }}
@@ -47,7 +47,7 @@ export default function ComingSoon() {
                 </a>
             </div>
 
-            <div className="flex justify-center mt-4 ml-6 space-x-2">
+            {/* <div className="flex justify-center mt-4 ml-6 space-x-2">
                 {images.map((_, idx) => (
                     <button
                         key={idx}
@@ -55,7 +55,7 @@ export default function ComingSoon() {
                         className={`w-2 h-2 rounded-full transition-all duration-200 ${current === idx ? "bg-gray-800 scale-125" : "bg-gray-400 opacity-60"} focus:outline-none`}
                     />
                 ))}
-            </div>
+            </div> */}
         </>
     );
 }

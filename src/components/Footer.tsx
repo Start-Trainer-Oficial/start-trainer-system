@@ -3,7 +3,7 @@ import { FaInstagram, FaYoutube, FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
     return (
-        <div className="flex flex-col text-white items-center justify-center w-full h-auto py-10 bg-[#5cffb8]">
+        <div className="flex flex-col text-white items-center justify-center w-full h-auto py-10 bg-white">
             <div className="flex flex-col lg:flex-row justify-between items-center w-full max-w-7xl px-4 gap-8">
                 <div className="flex flex-col items-center">
                     <Image src="https://res.cloudinary.com/dytw21kw2/image/upload/v1765647072/start_czqyaz.png" alt="Logo" width={600} height={400} className="object-contain w-[150px] lg:w-[200px]" />
