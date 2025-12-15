@@ -38,13 +38,13 @@ export default function Header() {
 
       {!user ? (
         <div className="flex gap-4">
-          <button onClick={() => openModal()} className="px-3 lg:px-5 py-1 rounded-sm lg:text-base text-sm text-black border border-black/10
+          <button onClick={() => openModal()} className="px-3 lg:px-5 py-1 rounded-sm lg:text-base text-xs text-black border border-black/10
   font-semibold transition-all duration-300 cursor-pointer hover:bg-[#5cffb8] hover:text-black hover:border-transparent">
             Entrar
           </button>
 
-          <button onClick={() => openRegisterModal()} className="px-3 lg:px-5 py-1 lg:text-base text-sm rounded-md text-black font-semibold 
-  bg-[#5cffb8]
+          <button onClick={() => openRegisterModal()} className="px-3 lg:px-5 py-1 lg:text-base text-xs rounded-md text-black font-semibold 
+  bg-gradient-to-r from-[#00e5ff] via-[#00e5ff] to-[#5cffb8]
   transition-all cursor-pointer duration-300 hover:brightness-90">
             Registre-se
           </button>
