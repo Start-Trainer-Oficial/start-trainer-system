@@ -21,10 +21,10 @@ export default function Home() {
       </div>
 
       <div id="agenda" className="flex flex-col items-center justify-center">
-        <h1 className="font-extrabold text-4xl uppercase mt-20 text-[#381877]">
+        <h1 className="font-extrabold text-xl lg:text-4xl uppercase mt-10 lg:mt-20 text-[#381877]">
           Agenda START
         </h1>
-        <p className="mt-1 font-bold opacity-70">
+        <p className="mt-1 text-sm lg:text-lg font-bold opacity-70">
           Confira nossas próximas programações!
         </p>
         <EventComponent />

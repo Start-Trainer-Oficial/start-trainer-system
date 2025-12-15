@@ -18,8 +18,8 @@ export default function NavLink({ labels, options, selectedOption, onSelect }: N
                     onClick={() => onSelect(option)}
                     className={`px-6 lg:px-12 py-2 rounded-sm font-semibold transition-all duration-300 cursor-pointer
                         ${selectedOption === option
-                            ? "bg-[#381877] text-[#5cffb8]"
-                            : "bg-transparent text-[#381877]"}`
+                            ? "bg-gradient-to-r from-[#00e5ff] via-[#00e5ff] to-[#5cffb8] text-black"
+                            : "bg-transparent text-black"}`
                     }
                 >
                     {labels[index]}
